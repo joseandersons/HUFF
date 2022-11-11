@@ -3,13 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 //..//
-#include "../include/pilhas.h"
+#include "../include/lista.h"
 
 #pragma pack(push, 1)
+
 struct node_s{
-    int key;
-    char item;
+    void *data;
     struct node_s *next;
 };
 
@@ -88,28 +89,32 @@ void list_print(struct lists_s *list){
         error("Error: empty list\n", -2);
     }
     
-    struct node_s *aux;
 
+    struct node_s *aux;
     aux = list->head->next;
+
     while(aux != aux->next){
-        printf("%i -> ", aux->key);
-        /*if(aux->next != aux->next->next)
-            printf(" ");*/
+        struct data *data = aux->data;
+
+        uint64_t *freq = (uint64_t *)data->data_1;
+        unsigned char *byte = (unsigned char  *)data->data_2;
+
+        printf("[%x]\t->\t[%d]\n", *byte, *freq);
+
         aux = aux->next;
     }
 }
 
-int list_remove(struct lists_s *list, int item){
+int list_remove(struct lists_s *list, void *data){
     int resul = 0;
 
     struct node_s *parent = list->head;
     struct node_s *aux = parent->next;
 
     while(aux != aux->next){
-        if(aux->item == item){
-            resul = 1;
+        if(aux->data == data)
             break;
-        }
+
         parent = parent->next;
         aux = aux->next;
     }
@@ -122,36 +127,35 @@ int list_remove(struct lists_s *list, int item){
     return resul;
 }
 
-void list_insert(struct lists_s *list, char item){
-    struct node_s *new_node;
-    new_node = (struct node_s *)malloc(sizeof(struct node_s));
-    new_node->item = item;
-    new_node->next = list->head->next;
-    list->head->next = new_node;
-}
-
-void list_sorted_insert(struct lists_s *list, char item, int key){
+void enfilerar(struct lists_s *list, void *data){
     struct node_s *new_node, *aux, *parent;
     new_node = (struct node_s *)malloc(sizeof(struct node_s));
 
     parent = list->head;
     aux = parent->next;
 
+    struct data *data_freq = (struct data *)data;
+    uint64_t *freq_1 = (uint64_t *)data_freq->data_1;
+
     while(aux != aux->next){
-        if(aux->key <= key)
+        struct data *data_node;
+        data_node = (struct data *)aux->data;
+        uint64_t *freq_2 = (uint64_t *)data_node->data_1;
+
+        if(*freq_2 >= *freq_1)
             break;
+
         aux = aux->next;
         parent = parent->next;
     }
 
-    new_node->item = item;
-    new_node->key = key;
+    new_node->data = data_freq;
 
     new_node->next = parent->next;
     parent->next = new_node;
 }
 
-char get_item(struct lists_s *list){
+/*char get_item(struct lists_s *list){
     if(list->head->next == list->tail)
         return -1;
 
@@ -162,3 +166,6 @@ char get_item(struct lists_s *list){
 
     return item;
 }
+*/
+
+struct data *data = top(list);

@@ -1,5 +1,5 @@
 all:
-	gcc -o main.o src/main.c -c -Wall
-	gcc -o pilha.o src/pilhas.c -c -Wall
-	gcc -o bin/teste main.o pilha.o -Wall
+	gcc -o main_panel.o src/main_panel.c -c -Wall
+	gcc -o list.o src/list.c -c -Wall
+	gcc -o bin/teste main_panel.o list.o -Wall
 	rm *.o
