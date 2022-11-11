@@ -15,6 +15,7 @@ struct node_s{
 };
 
 struct lists_s{
+    void *size;
     struct node_s *head, *tail;
 };
 
@@ -34,7 +35,9 @@ void list_create(struct lists_s **list) {
     aux->tail = (struct node_s *)malloc(sizeof(struct node_s));
     aux->head->next = aux->tail;
     aux->tail->next = aux->tail;
-
+    uint64_t *size = malloc(sizeof(uint64_t));
+    *size = 0;
+    aux->size = size;
     *list = aux;
 }
 
@@ -129,6 +132,7 @@ int list_remove(struct lists_s *list, void *data){
 
 void enfilerar(struct lists_s *list, void *data){
     struct node_s *new_node, *aux, *parent;
+    uint64_t *size = (uint64_t*)list->size;
     new_node = (struct node_s *)malloc(sizeof(struct node_s));
 
     parent = list->head;
@@ -153,17 +157,37 @@ void enfilerar(struct lists_s *list, void *data){
 
     new_node->next = parent->next;
     parent->next = new_node;
+    (*size)++;
+    list->size = size;
 }
 
-/*char get_item(struct lists_s *list){
-    if(list->head->next == list->tail)
-        return -1;
-
-    NODE *aux = list->head->next;
-    list->head->next = aux->next;
-    char item = aux->item;
-    free(aux);
-
-    return item;
+DATA* top(LIST *list){
+    if(list->head->next == list->tail) {
+        return NULL;
+    }
+    uint64_t *size = (uint64_t*)list->size;
+    NODE *remove = list->head->next;
+    NODE *aux = remove->next;
+    DATA *data = remove->data;
+    list->head->next = aux;
+    (*size)--;
+    list->size = size;
+    free(remove);
+    
+    return data;
 }
-*/
+
+// char get_item(struct lists_s *list){
+//     if(list->head->next == list->tail)
+//         return -1;
+
+//     NODE *aux = list->head->next;
+//     list->head->next = aux->next;
+//     char item = aux->item;
+//     free(aux);
+
+//     return item;
+// }
+
+
+// struct data *data = top(list);

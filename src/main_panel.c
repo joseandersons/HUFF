@@ -6,6 +6,7 @@
 #include "../include/main_panel.h"
 #include "../include/lista.h"
 
+
 void usage(){
 	printf("Welcome to %s\n"
 		   "Usage: %s [OPTIONS] [FILE]\n"
@@ -31,7 +32,6 @@ short parse_options(char *argv[]){
 
 _Bool select_options(short options, char *name){
 	if(options == 1){
-		
 		int fd = open(name, O_RDONLY);
 		
 		if(fd == -1){

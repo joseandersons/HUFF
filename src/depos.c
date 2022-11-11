@@ -23,7 +23,7 @@ void test(struct data *dados){
 	printf("Recurrence: \n");
 	for(int c = 0; c < 256; c ++){
 		soma += recurrence[c];
-		printf("[%x]:[%d]\n", c, recurrence[c]);
+		printf("[%x]:[%ld]\n", c, recurrence[c]);
 	}
 	printf("S: %i\n", soma);
 }
@@ -93,7 +93,6 @@ int main(){
 	list_print(list);
 	
 	free(ptr);
-	free(dados);
 	close(fd);
 	return 0;
 }
