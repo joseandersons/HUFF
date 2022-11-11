@@ -99,7 +99,7 @@ void list_print(struct lists_s *list){
         uint64_t *freq = (uint64_t *)data->data_1;
         unsigned char *byte = (unsigned char  *)data->data_2;
 
-        printf("[%x]\t->\t[%d]\n", *byte, *freq);
+        printf("[%x]\t->\t[%ld]\n", *byte, *freq);
 
         aux = aux->next;
     }
@@ -167,5 +167,3 @@ void enfilerar(struct lists_s *list, void *data){
     return item;
 }
 */
-
-struct data *data = top(list);
