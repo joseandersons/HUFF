@@ -6,6 +6,7 @@
 #include <fcntl.h>
 //..//
 #include "../include/lista.h"
+#include "../include/tree.h"
 
 #define BLOCK_SIZE 8192 //8 KiB
 
@@ -58,8 +59,8 @@ int main(){
 	if(!fd)
 		return EXIT_FAILURE;
 
-	uint64_t ptr[256]; //[0, ... , 255] // 00000000, 00000001, 00000010, 00000011, 00000100 // ptr[0] = freq
-
+	//uint64_t ptr[256]; //[0, ... , 255] // 00000000, 00000001, 00000010, 00000011, 00000100 // ptr[0] = freq
+	//comentei aqui para um teste Ass: Anderson lindo
 	uint64_t *ptr = (uint64_t *)malloc(sizeof(uint64_t)*256);
 	if(!ptr)
 		return EXIT_FAILURE;
@@ -88,9 +89,11 @@ int main(){
 
 		enfilerar(list, data);
 	}
+	char **table;//dicionario
 
 	printf("SORTED: \n");
 	list_print(list);
+	mount_tree(list);//montar a arvore
 	
 	free(ptr);
 	close(fd);

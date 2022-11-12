@@ -8,12 +8,9 @@
 //..//
 #include "../include/main_panel.h"
 #include "../include/lista.h"
+#include "../include/tree.h"
 
-struct tree{
-    void *data;
-    struct tree *left, *right;
-};
-
+// Cria o no e retorna o no
 struct tree *create_tree(void *data, struct tree *left, struct tree *right){
     struct tree *new_tree;
     if((new_tree = (struct tree*)malloc(sizeof(struct tree))) == NULL)return NULL;
@@ -25,8 +22,11 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
     return new_tree;
 }
 
+
+//monta a arvore de acorda com a fila
 void mount_tree(LIST *list){
-    if(list->head->next){
+    
+    while(list->head->next){
         struct tree *leaf1, *leaf2;
         leaf1->data = top(list);
         leaf2->data = top(list);
@@ -39,15 +39,17 @@ void mount_tree(LIST *list){
         uint64_t *frequency1 = (uint64_t*)data1->data_1;
         uint64_t *frequency2 = (uint64_t*)data2->data_1;
 
-        uint64_t *new_frequecy = *frequency1 + *frequency2;
-        unsigned char *new_byte = '*';
+        uint64_t *new_frequecy;
+        (*new_frequecy) = *frequency1 + *frequency2;
+        unsigned char *new_byte;
+        (*new_byte) = '*';
 
         new_data->data_1 = new_frequecy;
         new_data->data_2 = new_byte;
 
         struct tree *new_tree = create_tree(new_data, leaf1, leaf2);
 
-        enfilerar(new_tree, new_data);
+        //enfilerar(new_tree, new_data); //precisa revisar, pois temos que passar uma lista para a função enfileriar. OBS: mudar a struct list!!
     }
     
 }
@@ -68,12 +70,10 @@ int heightTree(struct tree *root){
     }
 }
 
-
-
 //alocar a nova tabela 
 
-char** allocTable(int height){
-    char **table;
+char** allocTable(int height, char **table){//declarei o table no despos,,, se tiver errado, depois mudar
+    
     int i = 0;
 
     table = malloc(sizeof(char *) * 256);
@@ -107,8 +107,4 @@ void setTable(char **table, struct tree *root, char *path, int height){
         setTable(table, root->left, left, height);
         setTable(table, root->right, right, height);
     }
-}
-
-int main(){
-    
 }

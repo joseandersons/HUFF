@@ -5,6 +5,7 @@ typedef struct lists_s LIST;
 typedef struct node_s NODE;
 typedef struct data DATA;
 
+
 #pragma pack(push, 1)
 
 struct node_s{
@@ -35,5 +36,6 @@ int list_remove(struct lists_s *list, void *data);
 void enfilerar(struct lists_s *list, void *data);
 char get_item(struct lists_s *list);
 DATA* top(LIST *list);
+
 
 #endif
