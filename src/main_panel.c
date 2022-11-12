@@ -6,13 +6,12 @@
 #include "../include/main_panel.h"
 #include "../include/lista.h"
 
-
 void usage(){
 	printf("Welcome to %s\n"
 		   "Usage: %s [OPTIONS] [FILE]\n"
 		   "\nExample: %s -c image.png\n"
 		   "\nOptions: \n"
-		   "  -x, --extract       Extract a file .huff file\n"
+		   "  -x, --extract       Extract a .huff file\n"
 		   "  -c, --compress      Compress any file to .huff file\n"
 		   "  -h, --help          Show this message\n",
 		   PROGRAM, PROGRAM, PROGRAM);

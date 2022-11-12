@@ -10,11 +10,6 @@
 
 #define BLOCK_SIZE 8192 //8 KiB
 
-/*struct data{
-	void *data_1;
-  	void *data_2;
-};*/
-
 void test(struct data *dados){
 	uint64_t *recurrence;
 
@@ -87,7 +82,10 @@ int main(){
 		data->data_1 = freq; //	[12664]
 		data->data_2 = byte; // [0]
 
-		enfilerar(list, data);
+		TREE *tree = create_tree(data, NULL, NULL);
+		tree->data = data;
+
+		enfilerar(list, tree);
 	}
 	char **table;//dicionario
 

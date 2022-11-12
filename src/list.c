@@ -146,10 +146,11 @@ void enfilerar(struct lists_s *list, void *data){
     list->size = size;
 }
 
-DATA* top(LIST *list){
+void *top(LIST *list){
     if(list->head->next == list->tail) {
         return NULL;
     }
+
     uint64_t *size = (uint64_t*)list->size;
     NODE *remove = list->head->next;
     NODE *aux = remove->next;

@@ -6,8 +6,6 @@
 #include <unistd.h>
 
 //..//
-#include "../include/main_panel.h"
-#include "../include/lista.h"
 #include "../include/tree.h"
 
 // Cria o no e retorna o no
@@ -24,12 +22,12 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
 
 
 //monta a arvore de acorda com a fila
-void mount_tree(LIST *list){
+void mount_tree(struct lists_s *list){
     
-    while(list->head->next){
+    while(list->head->next != list->tail){
         struct tree *leaf1, *leaf2;
-        leaf1->data = top(list);
-        leaf2->data = top(list);
+        leaf1 = (TREE *)top(list);
+        leaf2 = (TREE *)top(list);
 
         DATA *new_data, *data1, *data2;
         if((new_data = (DATA*)malloc(sizeof(DATA))) == NULL)getchar();
@@ -49,7 +47,7 @@ void mount_tree(LIST *list){
 
         struct tree *new_tree = create_tree(new_data, leaf1, leaf2);
 
-        //enfilerar(new_tree, new_data); //precisa revisar, pois temos que passar uma lista para a função enfileriar. OBS: mudar a struct list!!
+        enfilerar(list, new_tree); //precisa revisar, pois temos que passar uma lista para a função enfileriar. OBS: mudar a struct list!!
     }
     
 }
@@ -93,6 +91,10 @@ void setTable(char **table, struct tree *root, char *path, int height){
     char left[height], right[height];
 
     if(root->left == NULL && root->right == NULL){
+        DATA *data = (DATA *)root->data;
+        unsigned char *byte_ptr = (unsigned char *)data->data_2;
+        unsigned char byte = *byte_ptr;
+        strcpy(table[(int)byte],  path);
         // ??????
     }
 

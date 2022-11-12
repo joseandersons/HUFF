@@ -1,10 +1,11 @@
 #ifndef LISTA_H
 #define LISTA_H
 
+#include "tree.h"
+
 typedef struct lists_s LIST;
 typedef struct node_s NODE;
 typedef struct data DATA;
-
 
 #pragma pack(push, 1)
 
@@ -18,14 +19,15 @@ struct lists_s{
     struct node_s *head, *tail;
 };
 
-
-#pragma pop
-
 struct data{
 	void *data_1; //freq
   	void *data_2; //byte
 };
 
+#pragma pack(pop)
+
+
+void *top(LIST *list);
 void error(char *msg, int code);
 void list_create(struct lists_s **list);
 void list_clear(struct lists_s *list);
@@ -35,7 +37,5 @@ void list_insert(struct lists_s *list, char item);
 int list_remove(struct lists_s *list, void *data);
 void enfilerar(struct lists_s *list, void *data);
 char get_item(struct lists_s *list);
-DATA* top(LIST *list);
-
 
 #endif

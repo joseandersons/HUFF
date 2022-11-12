@@ -1,6 +1,10 @@
-#include "../include/main_panel.h"
-#include "../include/lista.h"
+#ifndef TREE_H
+#define TREE_H
 
+#include "main_panel.h"
+#include "lista.h"
+
+typedef struct lists_s LIST;
 typedef struct tree TREE;
 
 struct tree{
@@ -9,7 +13,9 @@ struct tree{
 };
 
 struct tree *create_tree(void *data, TREE *left, TREE *right);
-void mount_tree(LIST *list);
+void mount_tree(struct lists_s *list);
 int heightTree(struct tree *root);
 char** allocTable(int height, char **table);
 void setTable(char **table, struct tree *root, char *path, int height);
+
+#endif
