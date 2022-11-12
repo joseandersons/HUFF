@@ -37,10 +37,11 @@ void mount_tree(struct lists_s *list){
         uint64_t *frequency1 = (uint64_t*)data1->data_1;
         uint64_t *frequency2 = (uint64_t*)data2->data_1;
 
-        uint64_t *new_frequecy;
-        (*new_frequecy) = *frequency1 + *frequency2;
-        unsigned char *new_byte;
-        (*new_byte) = '*';
+        uint64_t *new_frequecy = (uint64_t*)malloc(sizeof(uint64_t));
+        unsigned char *new_byte = (unsigned char *)malloc(sizeof(unsigned char));
+        
+        *new_frequecy = *frequency1 + *frequency2;
+        *new_byte = '*';
 
         new_data->data_1 = new_frequecy;
         new_data->data_2 = new_byte;
@@ -49,7 +50,6 @@ void mount_tree(struct lists_s *list){
 
         enfilerar(list, new_tree); //precisa revisar, pois temos que passar uma lista para a função enfileriar. OBS: mudar a struct list!!
     }
-    
 }
 
 // função para calcular a altura da árvore
