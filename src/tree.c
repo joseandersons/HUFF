@@ -45,7 +45,7 @@ void mount_tree(LIST *list){
         new_data->data_1 = new_frequecy;
         new_data->data_2 = new_byte;
 
-        struct new_tree = create_tree(new_data, leaf1, leaf2);
+        struct tree *new_tree = create_tree(new_data, leaf1, leaf2);
 
         enfilerar(new_tree, new_data);
     }
