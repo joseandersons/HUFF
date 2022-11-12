@@ -93,7 +93,7 @@ void setTable(char **table, struct tree *root, char *path, int height){
     char left[height], right[height];
 
     if(root->left == NULL && root->right == NULL){
-        strcpy(table[root], path);
+        // ??????
     }
 
     else{
