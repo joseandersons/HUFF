@@ -7,20 +7,6 @@
 //..//
 #include "../include/lista.h"
 
-#pragma pack(push, 1)
-
-struct node_s{
-    void *data;
-    struct node_s *next;
-};
-
-struct lists_s{
-    void *size;
-    struct node_s *head, *tail;
-};
-
-#pragma pop
-
 void error(char *msg, int code){
     fputs(msg, stderr);
     exit(code);
@@ -30,7 +16,6 @@ void list_create(struct lists_s **list) {
     struct lists_s *aux;
 
     aux = (struct lists_s *)malloc(sizeof(struct lists_s));
-
     aux->head = (struct node_s *)malloc(sizeof(struct node_s));
     aux->tail = (struct node_s *)malloc(sizeof(struct node_s));
     aux->head->next = aux->tail;

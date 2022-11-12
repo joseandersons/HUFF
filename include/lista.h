@@ -5,6 +5,21 @@ typedef struct lists_s LIST;
 typedef struct node_s NODE;
 typedef struct data DATA;
 
+#pragma pack(push, 1)
+
+struct node_s{
+    void *data;
+    struct node_s *next;
+};
+
+struct lists_s{
+    void *size;
+    struct node_s *head, *tail;
+};
+
+
+#pragma pop
+
 struct data{
 	void *data_1; //freq
   	void *data_2; //byte
