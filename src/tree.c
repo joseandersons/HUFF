@@ -51,6 +51,64 @@ void mount_tree(LIST *list){
     }
     
 }
+
+// função para calcular a altura da árvore
+
+int heightTree(struct tree *root){
+    int left, right;
+
+    if(root == NULL) return 0;
+
+    else{
+        left = heightTree(root->left) + 1;
+        right = heightTree(root->right) + 1;
+
+        if(left > right) return left;
+        else return right;
+    }
+}
+
+
+
+//alocar a nova tabela 
+
+char** allocTable(int height){
+    char **table;
+    int i = 0;
+
+    table = malloc(sizeof(char *) * 256);
+
+    for(i = 0; i < 256; i++){
+        table[i] = calloc(height, sizeof(char));
+    }
+
+    return table;
+}
+
+//percorre a árvore salvando o caminho percorrido até chegar a um nó folha
+
+void setTable(char **table, struct tree *root, char *path, int height){
+    if(root == NULL) return;
+
+    char left[height], right[height];
+
+    if(root->left == NULL && root->right == NULL){
+        strcpy(table[root], path);
+    }
+
+    else{
+        strcpy(left, path);
+        strcpy(right, path);
+
+        //concatenando na string: adiciona 0 se for pra esqurda e 1 se for pra direita
+        strcat(left, "0");
+        strcat(right, "1");
+
+        setTable(table, root->left, left, height);
+        setTable(table, root->right, right, height);
+    }
+}
+
 int main(){
     
 }
