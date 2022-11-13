@@ -134,7 +134,12 @@ _Bool write_header(int compressed_file, int trash, int size_tree, char *tree){
 
 	write(compressed_file, &first_byte, 1);
 	write(compressed_file, &second_byte, 1);
-	write(compressed_file, tree, strlen(tree));
+	
+	/*
+		
+		FALTA ESCREVER A ARVORE NO ARQUIVO
+
+	*/
 
 	return 1;
 }
@@ -143,13 +148,18 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table){
 	ssize_t size;
 	unsigned char *buffer;
 
+	/*
+		
+		FALTA ESCREVER O BITSTREAM
+
+	*/
+
 	while(1){
 		size = read(fd, buffer, BLOCK_SIZE);
 		if(size <= 0)
 			break;
 		
 		for(int c = 0; c < (unsigned int)size; c++){
-			write(compressed_file, table[buffer[c]], 1);
 		}
 	}
 
