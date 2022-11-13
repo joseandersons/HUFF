@@ -1,6 +1,16 @@
 #ifndef LISTA_H
 #define LISTA_H
 
+#define ERROR "\033[1;38;5;1m"
+#define WHITE_INTENSE "\033[1;38;5;15m"
+#define WHITE "\033[1;38;5;15m"
+#define YELLOW "\033[1;38;5;220m"
+#define BLUE "\033[38;5;220m"
+#define RESET "\033[0m"
+#define REVEAL "\033[28m"
+#define BLINK "\033[6;38;5;214m"
+#define ITALIC "\033[3;2m"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>

@@ -3,10 +3,8 @@
 
 // Imprime a mensagem de erro caso aconteça:
 
-#define RED "\x1B[31m"
-
 void error(char *msg, int code){
-    printf(RED "%s\n", msg);
+    printf(ERROR "%s\n", msg);
 }
 
 // Cria uma lista dinâmica a partir da estrutura da Fila:

@@ -3,14 +3,18 @@
 #include "../include/compress.h"
 
 void usage(){
-	printf("Welcome to %s\n"
-		   "Usage: %s [OPTIONS] [FILE]\n"
-		   "\nExample: %s -c image.png\n"
-		   "\nOptions: \n"
-		   "  -x, --extract       Extract a .huff file\n"
-		   "  -c, --compress      Compress any file to .huff file\n"
-		   "  -h, --help          Show this message\n",
-		   PROGRAM, PROGRAM, PROGRAM);
+	printf(RESET WHITE_INTENSE "Welcome to "
+		   BLINK "%s\n" 
+		   RESET WHITE_INTENSE "\nUsage:   %s [OPTION] [FILE]"
+		   RESET ITALIC WHITE "\nExample: %s -c image.png\n"
+		   RESET WHITE_INTENSE "\nOptions: \n"
+		   RESET YELLOW "  -x, --extract       "
+		   RESET BLUE "Extract a .huff file\n"
+		   RESET YELLOW "  -c, --compress      "
+		   RESET BLUE "Compress any file to .huff file\n"
+		   RESET YELLOW "  -h, --help          "
+		   RESET BLUE "Show this message\n",
+		   PROGRAM, PROGRAM_LOWERCASE, PROGRAM_LOWERCASE);
 }
 
 short parse_options(char *argv[]){
@@ -28,10 +32,10 @@ short parse_options(char *argv[]){
 _Bool select_options(short options, char *name){
 	int fd = open(name, O_RDONLY);
 	if(fd == -1){
-		error("Error: File doesn't exist or no permissions!", 1);
+		error("Error: File doesn't exist or permission denied!", 1);
 		return 0;
 	}
-	
+
 	if(options == 1){
 		printf("Descompactando...\n");
 
