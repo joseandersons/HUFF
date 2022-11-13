@@ -50,7 +50,7 @@ TREE *mount_tree(struct lists_s *list){
 
         enfilerar(list, new_tree);
 
-        if(list->size)break;
+        if(list->size == 1)break;
     }
     TREE *tree_huff = top(list);
     return tree_huff;
