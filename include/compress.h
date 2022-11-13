@@ -12,6 +12,6 @@
 _Bool get_freq_table(int fd, uint64_t *ptr);
 _Bool create_queue(uint64_t *array_freq, LIST *list);
 _Bool compress(int fd, char *file_name);
-_Bool write_bit_stream(compressed_file, fd, char **table);
+_Bool write_bit_stream(int compressed_file, int fd, char **table);
 
 #endif

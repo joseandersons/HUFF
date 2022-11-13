@@ -123,7 +123,7 @@ uint16_t set_tree_size(int dest, int origin){
 	return aux;
 }
 
-_Bool write_header(int compressed_file, int trash, int size_tree, char *tree){
+/*_Bool write_header(int compressed_file, int trash, int size_tree, char *tree){
 	unsigned char first_byte, second_byte;
 
 	unsigned char byte_trash = (unsigned char)(trash << 5);
@@ -132,11 +132,6 @@ _Bool write_header(int compressed_file, int trash, int size_tree, char *tree){
 	first_byte = byte_trash | byte_size_tree;
 	second_byte = (unsigned char)size_tree;
 
-	printf("Teste: ");
-	binary_print(first_byte);
-	binary_print(second_byte);
-	printf("\n");
-
 	write(compressed_file, &first_byte, 1);
 	write(compressed_file, &second_byte, 1);
 	write(compressed_file, tree, strlen(tree));
@@ -144,8 +139,8 @@ _Bool write_header(int compressed_file, int trash, int size_tree, char *tree){
 	return 1;
 }
 
-_Bool write_bit_stream(compressed_file, fd, char **table){
-		/*
+_Bool write_bit_stream(int compressed_file, int fd, char **table){
+
 	while(1){
 		size = read(fd, buffer, BLOCK_SIZE);
 		if(size <= 0)
@@ -155,17 +150,12 @@ _Bool write_bit_stream(compressed_file, fd, char **table){
 			write(compressed_file, table[buffer[c]], 1);
 		}
 	}
-	*/
-}
+	*//*
+	return 1;
+}*/
 
-_Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, char *tree, char *file_name){
+_Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, unsigned char *tree, char *file_name){
 	_Bool status;
-	printf("T: ");
-	binary_print(trash);
-	printf("\n");
-	printf("S: ");
-	binary_print(size_tree);
-	printf("\n");
 
 	char *cpy, *state, *comp_file_name;
 
@@ -185,7 +175,7 @@ _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *ar
 		return 0;
 
 	lseek(fd, 2 + strlen(tree), SEEK_SET);
-	status = write_bit_stream(compressed_file, fd, table);
+	//status = write_bit_stream(compressed_file, fd, table);
 	if(!status)
 		return 0;
 
@@ -242,16 +232,15 @@ _Bool compress(int fd, char *file_name){
 	trash = trash_size(table, array_freq);
 	tree_size(tree, &size_tree);
 
+	printf("tree_size: %i\n", size_tree);
 
-	printf("\n");
-	for(int c = 0; c < 256; c++){
-		if(array_freq[c] != 0){
-			printf("[%c] %s\n", c, table[c]);
-		}
-	}
+	unsigned char tree_str[8192];
+	int counter = 0;
 
-	char *tree_str = (char *)malloc(size_tree + 1);
-	// = get_tree(tree)
+	get_tree(tree, tree_str, size_tree, &counter);
+	tree_str[counter] = '\0';
+
+	size_tree = counter;
 
 	status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, file_name);
 

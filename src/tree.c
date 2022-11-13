@@ -9,7 +9,7 @@ void print_pre_order(TREE *bt){
         DATA *data = (DATA *)bt->data;
         unsigned char *byte = (unsigned char *)data->byte;
 
-        printf("%c", *byte);
+        printf("%c\n", *byte);
         print_pre_order(bt->left);
         print_pre_order(bt->right);
     }
@@ -153,35 +153,39 @@ int trash_size(char **table, uint64_t *frequency){
 void tree_size(struct tree *root, int *size){
     if(root == NULL) return;
 
-    if(root->left == NULL && root->right == NULL){
+    /*if(root->left == NULL && root->right == NULL){
         DATA *data = (DATA *)root->data;
         unsigned char *byte_ptr = (unsigned char *)data->byte;
         unsigned char byte = *byte_ptr;
         if(byte == '*' || byte == '\\') *size += 1;
-    }
+    }*/
 
     *size += 1;
     tree_size(root->left, size);
     tree_size(root->right, size);
 }
 
-void get_tree(TREE *root, char *str, int *size_tree, int *count, int counter) {
-    if(root) {
-        str = (char *)realloc(str, sizeof(char) * counter);
+void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){
+    if(root){
+        //str = (char *)realloc(str, *counter);
         DATA *data = (DATA *)root->data;
         unsigned char *byte_ptr = (unsigned char*)data->byte;
         unsigned char byte = *byte_ptr;
 
         if(root->left == NULL && root->right == NULL) {
             if(byte == '*' || byte == '\\'){
-                strcat(str, '\\');
-                counter++;
+                str[*counter] = '\\';
+                //printf("%d countersss\n", *counter);
+                (*counter)++;
             }
         }
-        strcat(str, byte);
-        get_tree(root->left, str, *size_tree, (*count+1), ++counter);
-        get_tree(root->right, str, *size_tree, (*count+1), ++counter);
-    }
+        //printf("%d counter\n", *counter);
+        str[*counter] = byte;
 
-    if(*count == (*size_tree-1)) strcat(str, '\0');
+        (*counter)++;
+        get_tree(root->left, str, size_tree, counter);
+
+        //(*counter)++;
+        get_tree(root->right, str, size_tree, counter);
+    }
 }
