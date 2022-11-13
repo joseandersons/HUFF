@@ -2,7 +2,6 @@
 #include "../include/tree.h"
 
 // Imprime a mensagem de erro caso aconteça:
-
 void error(char *msg, int code){
     printf(ERROR "%s\n", msg);
 }

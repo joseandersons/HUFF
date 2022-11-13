@@ -31,6 +31,7 @@ short parse_options(char *argv[]){
 
 _Bool select_options(short options, char *name){
 	int fd = open(name, O_RDONLY);
+
 	if(fd == -1){
 		error("Error: File doesn't exist or permission denied!", 1);
 		return 0;
@@ -45,7 +46,8 @@ _Bool select_options(short options, char *name){
 	}else if(options == 2){
 		printf("Compactando...\n");
 
-		_Bool status = compress(fd);
+		_Bool status = compress(fd, name);
+
 		return status;
 	}else if(options == 3){
 		usage();

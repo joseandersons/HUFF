@@ -9,7 +9,7 @@ void print_pre_order(TREE *bt){
         DATA *data = (DATA *)bt->data;
         unsigned char *byte = (unsigned char *)data->byte;
 
-        printf("%c\n", *byte);
+        printf("%c", *byte);
         print_pre_order(bt->left);
         print_pre_order(bt->right);
     }
@@ -149,7 +149,6 @@ int trash_size(char **table, uint64_t *frequency){
     if(bits % 8 == 0) return 0;
     else return (8 - (bits % 8));
 }
-
 
 void tree_size(struct tree *root, int *size){
     if(root == NULL) return;
