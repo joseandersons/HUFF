@@ -153,12 +153,12 @@ int trash_size(char **table, uint64_t *frequency){
 void tree_size(struct tree *root, int *size){
     if(root == NULL) return;
 
-    /*if(root->left == NULL && root->right == NULL){
+    if(root->left == NULL && root->right == NULL){
         DATA *data = (DATA *)root->data;
         unsigned char *byte_ptr = (unsigned char *)data->byte;
         unsigned char byte = *byte_ptr;
         if(byte == '*' || byte == '\\') *size += 1;
-    }*/
+    }
 
     *size += 1;
     tree_size(root->left, size);
@@ -188,4 +188,7 @@ void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){
         //(*counter)++;
         get_tree(root->right, str, size_tree, counter);
     }
+
+    if(*counter == size_tree)
+        str[*counter] = '\0';
 }

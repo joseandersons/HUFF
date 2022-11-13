@@ -186,7 +186,7 @@ _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *ar
 	if(!status)
 		return 0;
 
-	lseek(fd, 2 + strlen(tree), SEEK_SET);
+	lseek(fd, 2 + size_tree, SEEK_SET);
 	//status = write_bit_stream(compressed_file, fd, table);
 	if(!status)
 		return 0;
@@ -247,12 +247,9 @@ _Bool compress(int fd, char *file_name){
 	printf("tree_size: %i\n", size_tree);
 
 	unsigned char tree_str[8192];
+
 	int counter = 0;
-
 	get_tree(tree, tree_str, size_tree, &counter);
-	tree_str[counter] = '\0';
-
-	size_tree = counter;
 
 	status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, file_name);
 
