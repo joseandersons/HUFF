@@ -123,7 +123,7 @@ uint16_t set_tree_size(int dest, int origin){
 	return aux;
 }
 
-/*_Bool write_header(int compressed_file, int trash, int size_tree, char *tree){
+_Bool write_header(int compressed_file, int trash, int size_tree, char *tree){
 	unsigned char first_byte, second_byte;
 
 	unsigned char byte_trash = (unsigned char)(trash << 5);
@@ -140,6 +140,8 @@ uint16_t set_tree_size(int dest, int origin){
 }
 
 _Bool write_bit_stream(int compressed_file, int fd, char **table){
+	ssize_t size;
+	unsigned char *buffer;
 
 	while(1){
 		size = read(fd, buffer, BLOCK_SIZE);
@@ -150,9 +152,9 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table){
 			write(compressed_file, table[buffer[c]], 1);
 		}
 	}
-	*//*
+
 	return 1;
-}*/
+}
 
 _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, unsigned char *tree, char *file_name){
 	_Bool status;
