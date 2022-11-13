@@ -9,23 +9,30 @@ typedef struct data DATA;
 
 #pragma pack(push, 1)
 
+// Estrutura do Nó:
+
 struct node_s{
     void *data;
     struct node_s *next;
 };
+
+// Estrutura da Lista:
 
 struct lists_s{
     void *size;
     struct node_s *head, *tail;
 };
 
+// Estrutura dos Dados:
+
 struct data{
-	void *data_1; //freq
-  	void *data_2; //byte
+	void *freq; //freq
+  	void *byte; //byte
 };
 
 #pragma pack(pop)
 
+// Declaração das funções auxiliares:
 
 void *top(LIST *list);
 void error(char *msg, int code);

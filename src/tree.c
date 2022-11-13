@@ -8,7 +8,8 @@
 //..//
 #include "../include/tree.h"
 
-// Cria o no e retorna o no
+// Cria o nó e retorna o mesmo:
+
 struct tree *create_tree(void *data, struct tree *left, struct tree *right){
     struct tree *new_tree;
     if((new_tree = (struct tree*)malloc(sizeof(struct tree))) == NULL)return NULL;
@@ -21,7 +22,8 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
 }
 
 
-//monta a arvore e retorna ela
+// Função para montar a árvore e retornar a mesma:
+
 TREE *mount_tree(struct lists_s *list){
     
     while(list->head->next != list->tail){
@@ -34,8 +36,8 @@ TREE *mount_tree(struct lists_s *list){
         data1 = (DATA*)leaf1->data;
         data2 = (DATA*)leaf2->data;
 
-        uint64_t *frequency1 = (uint64_t*)data1->data_1;
-        uint64_t *frequency2 = (uint64_t*)data2->data_1;
+        uint64_t *frequency1 = (uint64_t*)data1->freq;
+        uint64_t *frequency2 = (uint64_t*)data2->freq;
 
         uint64_t *new_frequecy = (uint64_t*)malloc(sizeof(uint64_t));
         unsigned char *new_byte = (unsigned char *)malloc(sizeof(unsigned char));
@@ -43,8 +45,8 @@ TREE *mount_tree(struct lists_s *list){
         *new_frequecy = *frequency1 + *frequency2;
         *new_byte = '*';
 
-        new_data->data_1 = new_frequecy;
-        new_data->data_2 = new_byte;
+        new_data->freq = new_frequecy;
+        new_data->byte = new_byte;
 
         struct tree *new_tree = create_tree(new_data, leaf1, leaf2);
 
@@ -56,7 +58,7 @@ TREE *mount_tree(struct lists_s *list){
     return tree_huff;
 }
 
-// função para calcular a altura da árvore
+// Função para calcular a altura da árvore:
 
 int heightTree(struct tree *root){
     int left, right;
@@ -72,7 +74,7 @@ int heightTree(struct tree *root){
     }
 }
 
-//alocar a nova tabela 
+// Alocar uma nova tabela: 
 
 char** allocTable(int height, char **table){//declarei o table no despos,,, se tiver errado, depois mudar
     
@@ -87,7 +89,7 @@ char** allocTable(int height, char **table){//declarei o table no despos,,, se t
     return table;
 }
 
-//percorre a árvore salvando o caminho percorrido até chegar a um nó folha
+// Percorre a árvore salvando o caminho percorrido até chegar a um nó folha:
 
 void setTable(char **table, struct tree *root, char *path, int height){
     if(root == NULL) return;
@@ -96,7 +98,7 @@ void setTable(char **table, struct tree *root, char *path, int height){
 
     if(root->left == NULL && root->right == NULL){
         DATA *data = (DATA *)root->data;
-        unsigned char *byte_ptr = (unsigned char *)data->data_2;
+        unsigned char *byte_ptr = (unsigned char *)data->byte;
         unsigned char byte = *byte_ptr;
         strcpy(table[(int)byte],  path);
         // ??????

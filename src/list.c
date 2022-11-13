@@ -6,18 +6,23 @@
 #include <stdint.h>
 //..//
 #include "../include/lista.h"
+//..//
+
+// Imprime a mensagem de erro caso aconteça:
 
 void error(char *msg, int code){
     fputs(msg, stderr);
     exit(code);
 }
 
-void list_create(struct lists_s **list) {
-    struct lists_s *aux;
+// Cria uma lista dinâmica a partir da estrutura da Fila:
 
-    aux = (struct lists_s *)malloc(sizeof(struct lists_s));
-    aux->head = (struct node_s *)malloc(sizeof(struct node_s));
-    aux->tail = (struct node_s *)malloc(sizeof(struct node_s));
+void list_create(LIST **list) {
+    LIST *aux;
+
+    aux = (LIST *)malloc(sizeof(LIST));
+    aux->head = (NODE *)malloc(sizeof(NODE));
+    aux->tail = (NODE *)malloc(sizeof(NODE));
     aux->head->next = aux->tail;
     aux->tail->next = aux->tail;
     uint64_t *size = malloc(sizeof(uint64_t));
@@ -26,8 +31,10 @@ void list_create(struct lists_s **list) {
     *list = aux;
 }
 
-void list_clear(struct lists_s *list){
-    struct node_s *aux, *parent;
+// Limpa todos os nós da fila dinâmica:
+
+void list_clear(LIST *list){
+    NODE *aux, *parent;
     
     if(!list){
         error("Error: list doesn't exist\n", -1);
@@ -46,12 +53,14 @@ void list_clear(struct lists_s *list){
     }
 }
 
-void list_delete(struct lists_s **list){
+// Exclui a lista dinâmica:
+
+void list_delete(LIST **list){
     if(!list){
         error("Error: list doesn't exist\n", -1);
     }
     
-    struct lists_s *aux;
+    LIST *aux;
     aux = *list;
     if(aux->head->next != aux->tail)
         list_clear(aux);
@@ -68,7 +77,9 @@ void list_delete(struct lists_s **list){
     *list = aux;
 }
 
-void list_print(struct lists_s *list){
+// Imprime a lista dinâmica da estrutura Fila:
+
+void list_print(LIST *list){
     if(!list){
         error("Error: list doesn't exist\n", -1);
     }
@@ -78,14 +89,14 @@ void list_print(struct lists_s *list){
     }
     
 
-    struct node_s *aux;
+    NODE *aux;
     aux = list->head->next;
 
     while(aux != aux->next){
-        struct data *data = aux->data;
+        DATA *data = aux->data;
 
-        uint64_t *freq = (uint64_t *)data->data_1;
-        unsigned char *byte = (unsigned char  *)data->data_2;
+        uint64_t *freq = (uint64_t *)data->freq;
+        unsigned char *byte = (unsigned char  *)data->byte;
 
         printf("[%x]\t->\t[%ld]\n", *byte, *freq);
 
@@ -93,43 +104,23 @@ void list_print(struct lists_s *list){
     }
 }
 
-int list_remove(struct lists_s *list, void *data){
-    int resul = 0;
+// Inserir lista dinâmica de forma crescente:
 
-    struct node_s *parent = list->head;
-    struct node_s *aux = parent->next;
-
-    while(aux != aux->next){
-        if(aux->data == data)
-            break;
-
-        parent = parent->next;
-        aux = aux->next;
-    }
-
-    parent->next = aux->next;
-
-    if(aux != aux->next)
-        free(aux);
-
-    return resul;
-}
-
-void enfilerar(struct lists_s *list, void *data){
-    struct node_s *new_node, *aux, *parent;
+void enfilerar(LIST *list, void *data){
+    NODE *new_node, *aux, *parent;
     uint64_t *size = (uint64_t*)list->size;
-    new_node = (struct node_s *)malloc(sizeof(struct node_s));
+    new_node = (NODE *)malloc(sizeof(NODE));
 
     parent = list->head;
     aux = parent->next;
 
-    struct data *data_freq = (struct data *)data;
-    uint64_t *freq_1 = (uint64_t *)data_freq->data_1;
+    DATA *data_freq = (DATA *)data;
+    uint64_t *freq_1 = (uint64_t *)data_freq->freq;
 
     while(aux != aux->next){
-        struct data *data_node;
-        data_node = (struct data *)aux->data;
-        uint64_t *freq_2 = (uint64_t *)data_node->data_1;
+        DATA *data_node;
+        data_node = (DATA *)aux->data;
+        uint64_t *freq_2 = (uint64_t *)data_node->freq;
 
         if(*freq_2 >= *freq_1)
             break;
@@ -145,6 +136,8 @@ void enfilerar(struct lists_s *list, void *data){
     (*size)++;
     list->size = size;
 }
+
+// Salva a estrutura DATA em uma variável, passa para o próximo nó e remove ele, e depois retorna a variável:
 
 void *top(LIST *list){
     if(list->head->next == list->tail) {
@@ -162,18 +155,3 @@ void *top(LIST *list){
     
     return data;
 }
-
-// char get_item(struct lists_s *list){
-//     if(list->head->next == list->tail)
-//         return -1;
-
-//     NODE *aux = list->head->next;
-//     list->head->next = aux->next;
-//     char item = aux->item;
-//     free(aux);
-
-//     return item;
-// }
-
-
-// struct data *data = top(list);
