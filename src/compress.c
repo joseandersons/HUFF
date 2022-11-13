@@ -72,7 +72,7 @@ int main(){
 		TREE *tree = create_tree(data, NULL, NULL);
 		tree->data = data;
 
-		enfilerar(list, tree);
+		list_enqueue(list, tree);
 	}
 
 	printf("SORTED: \n");

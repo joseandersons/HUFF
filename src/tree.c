@@ -40,8 +40,8 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
 TREE *mount_tree(struct lists_s *list){
     while(list->head->next != list->tail){
         struct tree *leaf1, *leaf2;
-        leaf1 = (TREE *)top(list);
-        leaf2 = (TREE *)top(list);
+        leaf1 = (TREE *)list_dequeue(list);
+        leaf2 = (TREE *)list_dequeue(list);
 
         DATA *new_data, *data1, *data2;
         
@@ -64,14 +64,14 @@ TREE *mount_tree(struct lists_s *list){
 
         struct tree *new_tree = create_tree(new_data, leaf1, leaf2);
 
-        enfilerar(list, new_tree);
+        list_enqueue(list, new_tree);
 
         uint64_t *size = (uint64_t *)list->size;
 
         if(*size == 1)break;
     }
 
-    TREE *tree_huff = top(list);
+    TREE *tree_huff = list_dequeue(list);
 
     return tree_huff;
 }

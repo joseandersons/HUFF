@@ -34,7 +34,7 @@ struct data{
 
 // Declaração das funções auxiliares:
 
-void *top(LIST *list);
+void *list_dequeue(LIST *list);
 void error(char *msg, int code);
 void list_create(struct lists_s **list);
 void list_clear(struct lists_s *list);
@@ -42,7 +42,6 @@ void list_delete(struct lists_s **list);
 void list_print(struct lists_s *list);
 void list_insert(struct lists_s *list, char item);
 int list_remove(struct lists_s *list, void *data);
-void enfilerar(struct lists_s *list, void *data);
-char get_item(struct lists_s *list);
+void list_enqueue(struct lists_s *list, void *data);
 
 #endif

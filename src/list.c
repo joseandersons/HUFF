@@ -90,7 +90,6 @@ void list_print(LIST *list){
         error("Error: empty list\n", -2);
     }
     
-
     NODE *aux;
     aux = list->head->next;
 
@@ -109,8 +108,9 @@ void list_print(LIST *list){
 
 // Inserir lista dinâmica de forma crescente:
 
-void enfilerar(LIST *list, void *data){
+void list_enqueue(LIST *list, void *data){
     NODE *new_node, *aux, *parent;
+
     uint64_t *size = (uint64_t*)list->size;
     new_node = (NODE *)malloc(sizeof(NODE));
 
@@ -118,12 +118,12 @@ void enfilerar(LIST *list, void *data){
     aux = parent->next;
 
     TREE *tree = (TREE *)data;
-    DATA *data_freq = (struct data *)tree->data;
+    DATA *data_freq = (DATA*)tree->data;
 
     uint64_t *freq_1 = (uint64_t *)data_freq->freq;
 
     while(aux != aux->next){
-        struct data *data_aux;
+        DATA *data_aux;
         TREE *tree_aux = (TREE *)aux->data;
 
         data_aux = (DATA *)tree_aux->data;
@@ -135,30 +135,32 @@ void enfilerar(LIST *list, void *data){
         aux = aux->next;
         parent = parent->next;
     }
-
     new_node->data = tree;
 
     new_node->next = parent->next;
     parent->next = new_node;
+
     (*size)++;
     list->size = size;
 }
 
 // Salva a estrutura DATA em uma variável, passa para o próximo nó e remove ele, e depois retorna a variável:
 
-void *top(LIST *list){
-    if(list->head->next == list->tail) {
+void *list_dequeue(LIST *list){
+    if(list->head->next == list->tail){
         return NULL;
     }
 
-    uint64_t *size = (uint64_t*)list->size;
     NODE *remove = list->head->next;
-    NODE *aux = remove->next;
     DATA *data = remove->data;
+
+    NODE *aux = remove->next;
     list->head->next = aux;
+
+    uint64_t *size = (uint64_t*)list->size;
     (*size)--;
     list->size = size;
+
     free(remove);
-    
     return data;
 }
