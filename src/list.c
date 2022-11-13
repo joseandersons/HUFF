@@ -1,12 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-//..//
-#include "../include/lista.h"
-//..//
+#include "../include/list.h"
+#include "../include/tree.h"
 
 // Imprime a mensagem de erro caso aconteça:
 
@@ -14,23 +7,39 @@
 
 void error(char *msg, int code){
     printf(RED "%s\n", msg);
-    exit(code);
 }
 
 // Cria uma lista dinâmica a partir da estrutura da Fila:
+LIST *list_create(){
+    LIST *new_list;
 
-void list_create(LIST **list) {
-    LIST *aux;
+    new_list = (LIST *)malloc(sizeof(LIST));
+    if(!new_list){
+        return NULL;
+    }
 
-    aux = (LIST *)malloc(sizeof(LIST));
-    aux->head = (NODE *)malloc(sizeof(NODE));
-    aux->tail = (NODE *)malloc(sizeof(NODE));
-    aux->head->next = aux->tail;
-    aux->tail->next = aux->tail;
+    new_list->head = (NODE *)malloc(sizeof(NODE));
+    if(!new_list->head){
+        return NULL;
+    }
+
+    new_list->tail = (NODE *)malloc(sizeof(NODE));
+    if(!new_list->tail){
+        return NULL;
+    }
+
+    new_list->head->next = new_list->tail;
+    new_list->tail->next = new_list->tail;
+
     uint64_t *size = malloc(sizeof(uint64_t));
+    if(!size){
+        return NULL;
+    }
+
     *size = 0;
-    aux->size = size;
-    *list = aux;
+    new_list->size = size;
+
+    return new_list;
 }
 
 // Limpa todos os nós da fila dinâmica:
@@ -108,11 +117,13 @@ void list_print(LIST *list){
 
 // Inserir lista dinâmica de forma crescente:
 
-void list_enqueue(LIST *list, void *data){
+_Bool list_enqueue(LIST *list, void *data){
     NODE *new_node, *aux, *parent;
 
     uint64_t *size = (uint64_t*)list->size;
     new_node = (NODE *)malloc(sizeof(NODE));
+    if(!new_node)
+        return 0;
 
     parent = list->head;
     aux = parent->next;
@@ -142,10 +153,11 @@ void list_enqueue(LIST *list, void *data){
 
     (*size)++;
     list->size = size;
+
+    return 1;
 }
 
 // Salva a estrutura DATA em uma variável, passa para o próximo nó e remove ele, e depois retorna a variável:
-
 void *list_dequeue(LIST *list){
     if(list->head->next == list->tail){
         return NULL;

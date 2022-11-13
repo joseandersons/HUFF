@@ -1,2 +1,2 @@
 all:
-	gcc -o bin/teste src/tree.c src/main_panel.c src/list.c -Wall
+	gcc -o bin/teste src/compress.c src/tree.c src/main_panel.c src/list.c -Wall

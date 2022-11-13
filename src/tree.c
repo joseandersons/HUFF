@@ -1,22 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include <stdint.h>
-#include <unistd.h>
-
-//..//
 #include "../include/tree.h"
+#include "../include/list.h"
+#include "../include/main_panel.h"
 
 // Cria o nó e retorna o mesmo:
 
 void print_pre_order(TREE *bt){
     if(bt){
         DATA *data = (DATA *)bt->data;
-        uint64_t *freq = (uint64_t *)data->freq;
         unsigned char *byte = (unsigned char *)data->byte;
 
-        printf("%c\n", *byte, *freq);
+        printf("%c\n", *byte);
         print_pre_order(bt->left);
         print_pre_order(bt->right);
     }
@@ -34,18 +27,23 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
     return new_tree;
 }
 
-
 // Função para montar a árvore e retornar a mesma:
-
-TREE *mount_tree(struct lists_s *list){
+TREE *mount_tree(LIST *list){
     while(list->head->next != list->tail){
         struct tree *leaf1, *leaf2;
-        leaf1 = (TREE *)list_dequeue(list);
-        leaf2 = (TREE *)list_dequeue(list);
-
         DATA *new_data, *data1, *data2;
-        
-        if((new_data = (DATA*)malloc(sizeof(DATA))) == NULL)getchar();
+
+        leaf1 = (TREE *)list_dequeue(list);
+        if(!leaf1)
+            return NULL;
+
+        leaf2 = (TREE *)list_dequeue(list);
+        if(!leaf2)
+            return NULL;
+
+        new_data = (DATA*)malloc(sizeof(DATA));
+        if(!new_data)
+            return NULL;
 
         data1 = (DATA*)leaf1->data;
         data2 = (DATA*)leaf2->data;
@@ -64,14 +62,19 @@ TREE *mount_tree(struct lists_s *list){
 
         struct tree *new_tree = create_tree(new_data, leaf1, leaf2);
 
-        list_enqueue(list, new_tree);
+        _Bool status = list_enqueue(list, new_tree);
+        if(!status)
+            return NULL;
 
         uint64_t *size = (uint64_t *)list->size;
 
-        if(*size == 1)break;
+        if(*size == 1)
+            break;
     }
 
     TREE *tree_huff = list_dequeue(list);
+    if(!tree_huff)
+        return NULL;
 
     return tree_huff;
 }
@@ -79,17 +82,15 @@ TREE *mount_tree(struct lists_s *list){
 // Função para calcular a altura da árvore:
 
 int heightTree(struct tree *root){
+    if(!root)
+        return 0;
+
     int left, right;
 
-    if(root == NULL) return -1;
+    left = heightTree(root->left) + 1;
+    right = heightTree(root->right) + 1;
 
-    else{
-        left = heightTree(root->left) + 1;
-        right = heightTree(root->right) + 1;
-
-        if(left > right) return left;
-        else return right;
-    }
+    return left >= right ? left : right;
 }
 
 // Alocar uma nova tabela: 
@@ -99,6 +100,8 @@ char **allocTable(int height, char **table){//declarei o table no despos,,, se t
     int i = 0;
 
     table = malloc(sizeof(char *) * 256);
+    if(!table)
+        return NULL;
 
     for(i = 0; i < 256; i++){
         table[i] = calloc(height, sizeof(char));
@@ -108,7 +111,6 @@ char **allocTable(int height, char **table){//declarei o table no despos,,, se t
 }
 
 // Percorre a árvore salvando o caminho percorrido até chegar a um nó folha:
-
 void setTable(char **table, struct tree *root, char *path, int height){
     if(root == NULL) return;
 

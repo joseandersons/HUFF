@@ -1,10 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-//..//
 #include "../include/main_panel.h"
-#include "../include/lista.h"
+#include "../include/list.h"
+#include "../include/compress.h"
 
 void usage(){
 	printf("Welcome to %s\n"
@@ -30,25 +26,23 @@ short parse_options(char *argv[]){
 }
 
 _Bool select_options(short options, char *name){
+	int fd = open(name, O_RDONLY);
+	if(fd == -1){
+		error("Error: File doesn't exist or no permissions!", 1);
+		return 0;
+	}
+	
 	if(options == 1){
-		int fd = open(name, O_RDONLY);
-		
-		if(fd == -1){
-			puts("Error: File doesn't exist or no permissions");
-			return 0;
-		}
+		printf("Descompactando...\n");
 
-		return 1;
+		//_Bool status = decompress(fd);
+
+		//return status;
 	}else if(options == 2){
-		int fd = open(name, O_RDONLY);
-
-		if(fd == -1){
-			puts("Error: File doesn't exist or no permissions");
-			return 0;
-		}
-
 		printf("Compactando...\n");
-		return 1;
+
+		_Bool status = compress(fd);
+		return status;
 	}else if(options == 3){
 		usage();
 		return 1;
@@ -73,6 +67,10 @@ int main(int argc, char *argv[]){
 	}
 
 	_Bool status = select_options(option, argv[2]);
+	if(!status){
+		error("Compression failed!", 1);
+		return EXIT_FAILURE;
+	}
 
-	return !status;
+	return 0;
 }

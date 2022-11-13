@@ -1,7 +1,9 @@
 #ifndef LISTA_H
 #define LISTA_H
 
-#include "tree.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
 typedef struct lists_s LIST;
 typedef struct node_s NODE;
@@ -34,14 +36,13 @@ struct data{
 
 // Declaração das funções auxiliares:
 
+LIST *list_create();
+_Bool list_enqueue(struct lists_s *list, void *data);
 void *list_dequeue(LIST *list);
 void error(char *msg, int code);
-void list_create(struct lists_s **list);
 void list_clear(struct lists_s *list);
 void list_delete(struct lists_s **list);
 void list_print(struct lists_s *list);
 void list_insert(struct lists_s *list, char item);
-int list_remove(struct lists_s *list, void *data);
-void list_enqueue(struct lists_s *list, void *data);
 
 #endif

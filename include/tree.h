@@ -1,10 +1,14 @@
 #ifndef TREE_H
 #define TREE_H
 
-#include "main_panel.h"
-#include "lista.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdint.h>
+//--//
+#include "list.h"
 
-typedef struct lists_s LIST;
+//typedef struct lists_s LIST;
 typedef struct tree TREE;
 
 struct tree{
@@ -12,11 +16,11 @@ struct tree{
     struct tree *left, *right;
 };
 
-struct tree *create_tree(void *data, TREE *left, TREE *right);
-TREE *mount_tree(struct lists_s *list);
-int heightTree(struct tree *root);
+TREE *mount_tree(LIST *list);
+TREE *create_tree(void *data, TREE *left, TREE *right);
+int heightTree(TREE *root);
 char** allocTable(int height, char **table);
-void setTable(char **table, struct tree *root, char *path, int height);
+void setTable(char **table, TREE *root, char *path, int height);
 void print_pre_order(TREE *bt);
 
 #endif
