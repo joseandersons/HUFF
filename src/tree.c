@@ -136,3 +136,32 @@ void setTable(char **table, struct tree *root, char *path, int height){
         setTable(table, root->right, right, height);
     }
 }
+
+int trash_size(char **table, uint64_t *frequency){
+    int bits = 0;
+
+    for(int i = 0; i < 256; i++){
+        if(frequency[i] != 0){
+            bits += frequency[i] * strlen(table[i]);
+        }
+    }
+
+    if(bits % 8 == 0) return 0;
+    else return (8 - (bits % 8));
+}
+
+
+void tree_size(struct tree *root, int *size){
+    if(root == NULL) return;
+
+    if(root->left == NULL && root->right == NULL){
+        DATA *data = (DATA *)root->data;
+        unsigned char *byte_ptr = (unsigned char *)data->byte;
+        unsigned char byte = *byte_ptr;
+        if(byte == '*' || byte == '\\') *size += 1;
+    }
+
+    *size += 1;
+    tree_size(root->left, size);
+    tree_size(root->right, size);
+}
