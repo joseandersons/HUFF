@@ -22,5 +22,8 @@ int heightTree(TREE *root);
 char** allocTable(int height, char **table);
 void setTable(char **table, TREE *root, char *path, int height);
 void print_pre_order(TREE *bt);
+int trash_size(char **table, uint64_t *frequency);
+void tree_size(TREE *root, int *size);
+
 
 #endif
