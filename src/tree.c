@@ -21,8 +21,8 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
 }
 
 
-//monta a arvore de acorda com a fila
-void mount_tree(struct lists_s *list){
+//monta a arvore e retorna ela
+TREE *mount_tree(struct lists_s *list){
     
     while(list->head->next != list->tail){
         struct tree *leaf1, *leaf2;
@@ -48,8 +48,12 @@ void mount_tree(struct lists_s *list){
 
         struct tree *new_tree = create_tree(new_data, leaf1, leaf2);
 
-        enfilerar(list, new_tree); //precisa revisar, pois temos que passar uma lista para a função enfileriar. OBS: mudar a struct list!!
+        enfilerar(list, new_tree);
+
+        if(list->size)break;
     }
+    TREE *tree_huff = top(list);
+    return tree_huff;
 }
 
 // função para calcular a altura da árvore
@@ -57,7 +61,7 @@ void mount_tree(struct lists_s *list){
 int heightTree(struct tree *root){
     int left, right;
 
-    if(root == NULL) return 0;
+    if(root == NULL) return -1;
 
     else{
         left = heightTree(root->left) + 1;
