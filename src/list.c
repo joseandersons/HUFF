@@ -10,8 +10,10 @@
 
 // Imprime a mensagem de erro caso aconteça:
 
+#define RED "\x1B[31m"
+
 void error(char *msg, int code){
-    fputs(msg, stderr);
+    printf(RED "%s\n", msg);
     exit(code);
 }
 
@@ -93,12 +95,13 @@ void list_print(LIST *list){
     aux = list->head->next;
 
     while(aux != aux->next){
-        DATA *data = aux->data;
+        TREE *tree = (TREE *)aux->data;
+        DATA *data = (DATA *)tree->data;
 
         uint64_t *freq = (uint64_t *)data->freq;
         unsigned char *byte = (unsigned char  *)data->byte;
 
-        printf("[%x]\t->\t[%ld]\n", *byte, *freq);
+        printf("[%c]\t->\t[%ld]\n", *byte, *freq);
 
         aux = aux->next;
     }
@@ -114,13 +117,17 @@ void enfilerar(LIST *list, void *data){
     parent = list->head;
     aux = parent->next;
 
-    DATA *data_freq = (DATA *)data;
+    TREE *tree = (TREE *)data;
+    DATA *data_freq = (struct data *)tree->data;
+
     uint64_t *freq_1 = (uint64_t *)data_freq->freq;
 
     while(aux != aux->next){
-        DATA *data_node;
-        data_node = (DATA *)aux->data;
-        uint64_t *freq_2 = (uint64_t *)data_node->freq;
+        struct data *data_aux;
+        TREE *tree_aux = (TREE *)aux->data;
+
+        data_aux = (DATA *)tree_aux->data;
+        uint64_t *freq_2 = (uint64_t *)data_aux->freq;
 
         if(*freq_2 >= *freq_1)
             break;
@@ -129,7 +136,7 @@ void enfilerar(LIST *list, void *data){
         parent = parent->next;
     }
 
-    new_node->data = data_freq;
+    new_node->data = tree;
 
     new_node->next = parent->next;
     parent->next = new_node;

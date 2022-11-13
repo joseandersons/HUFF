@@ -13,9 +13,10 @@ struct tree{
 };
 
 struct tree *create_tree(void *data, TREE *left, TREE *right);
-void mount_tree(struct lists_s *list);
+TREE *mount_tree(struct lists_s *list);
 int heightTree(struct tree *root);
 char** allocTable(int height, char **table);
 void setTable(char **table, struct tree *root, char *path, int height);
+void print_pre_order(TREE *bt);
 
 #endif

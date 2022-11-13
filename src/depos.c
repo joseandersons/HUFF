@@ -10,7 +10,6 @@
 
 #define BLOCK_SIZE 8192 //8 KiB
 
-
 // Obtém a frequência da tabela Hash:
 
 _Bool getFreqTable(int fd, uint64_t *ptr){
@@ -38,11 +37,13 @@ _Bool getFreqTable(int fd, uint64_t *ptr){
 }
 
 int main(){
-	int fd = open("test", O_RDONLY);
-	if(!fd)
-		return EXIT_FAILURE;
+	int fd = open("arq", O_RDONLY); //ID
+	if(fd == -1){
+		error("Arquivo não encontrado/sem permissão", 1);
+	}
 
 	uint64_t *ptr = (uint64_t *)malloc(sizeof(uint64_t)*256);
+	
 	if(!ptr)
 		return EXIT_FAILURE;
 	
@@ -73,11 +74,14 @@ int main(){
 
 		enfilerar(list, tree);
 	}
-	char **table; //dicionario
 
 	printf("SORTED: \n");
 	list_print(list);
-	mount_tree(list); //montar a arvore
+
+	TREE *tree = mount_tree(list);//montar a arvore
+	printf("TREE:\n");
+	print_pre_order(tree);
+	printf("\n");
 	
 	free(ptr);
 	close(fd);

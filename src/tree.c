@@ -10,6 +10,19 @@
 
 // Cria o nó e retorna o mesmo:
 
+void print_pre_order(TREE *bt){
+    if(bt){
+        DATA *data = (DATA *)bt->data;
+        uint64_t *freq = (uint64_t *)data->freq;
+        unsigned char *byte = (unsigned char *)data->byte;
+
+        printf("%c\n", *byte, *freq);
+        print_pre_order(bt->left);
+        print_pre_order(bt->right);
+    }
+}
+
+// Cria o no e retorna o no
 struct tree *create_tree(void *data, struct tree *left, struct tree *right){
     struct tree *new_tree;
     if((new_tree = (struct tree*)malloc(sizeof(struct tree))) == NULL)return NULL;
@@ -25,14 +38,15 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
 // Função para montar a árvore e retornar a mesma:
 
 TREE *mount_tree(struct lists_s *list){
-    
     while(list->head->next != list->tail){
         struct tree *leaf1, *leaf2;
         leaf1 = (TREE *)top(list);
         leaf2 = (TREE *)top(list);
 
         DATA *new_data, *data1, *data2;
+        
         if((new_data = (DATA*)malloc(sizeof(DATA))) == NULL)getchar();
+
         data1 = (DATA*)leaf1->data;
         data2 = (DATA*)leaf2->data;
 
@@ -52,9 +66,13 @@ TREE *mount_tree(struct lists_s *list){
 
         enfilerar(list, new_tree);
 
-        if(list->size)break;
+        uint64_t *size = (uint64_t *)list->size;
+
+        if(*size == 1)break;
     }
+
     TREE *tree_huff = top(list);
+
     return tree_huff;
 }
 
@@ -76,7 +94,7 @@ int heightTree(struct tree *root){
 
 // Alocar uma nova tabela: 
 
-char** allocTable(int height, char **table){//declarei o table no despos,,, se tiver errado, depois mudar
+char **allocTable(int height, char **table){//declarei o table no despos,,, se tiver errado, depois mudar
     
     int i = 0;
 
