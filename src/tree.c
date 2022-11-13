@@ -165,3 +165,24 @@ void tree_size(struct tree *root, int *size){
     tree_size(root->left, size);
     tree_size(root->right, size);
 }
+
+void get_tree(TREE *root, char *str, int *size_tree, int *count, int counter) {
+    if(root) {
+        str = (char *)realloc(str, sizeof(char) * counter);
+        DATA *data = (DATA *)root->data;
+        unsigned char *byte_ptr = (unsigned char*)data->byte;
+        unsigned char byte = *byte_ptr;
+
+        if(root->left == NULL && root->right == NULL) {
+            if(byte == '*' || byte == '\\'){
+                strcat(str, '\\');
+                counter++;
+            }
+        }
+        strcat(str, byte);
+        get_tree(root->left, str, *size_tree, (*count+1), ++counter);
+        get_tree(root->right, str, *size_tree, (*count+1), ++counter);
+    }
+
+    if(*count == (*size_tree-1)) strcat(str, '\0');
+}
