@@ -3,7 +3,8 @@
 #include "../include/tree.h"
 #include "../include/helpful.h"
 
-// Cria uma lista dinâmica a partir da estrutura da Fila:
+// Função que cria uma lista dinâmica a partir da estrutura da Fila:
+
 LIST *list_create(){
     LIST *new_list;
 
@@ -36,7 +37,7 @@ LIST *list_create(){
     return new_list;
 }
 
-// Limpa todos os nós da fila dinâmica:
+// Função que limpa todos os nós da fila dinâmica:
 
 _Bool list_clear(LIST *list){
     NODE *aux, *parent;
@@ -62,7 +63,7 @@ _Bool list_clear(LIST *list){
     return 1;
 }
 
-// Exclui a lista dinâmica:
+// Função que exclui a lista dinâmica:
 
 _Bool list_delete(LIST **list){
     if(!list){
@@ -89,7 +90,7 @@ _Bool list_delete(LIST **list){
     return 1;
 }
 
-// Imprime a lista dinâmica da estrutura Fila:
+// Função que imprime a lista dinâmica da estrutura Fila:
 
 _Bool list_print(LIST *list){
     if(!list){
@@ -120,7 +121,7 @@ _Bool list_print(LIST *list){
     return 1;
 }
 
-// Inserir lista dinâmica de forma crescente:
+// Função que insere na lista dinâmica de forma crescente:
 
 _Bool list_enqueue(LIST *list, void *data){
     NODE *new_node, *aux, *parent;
@@ -162,7 +163,8 @@ _Bool list_enqueue(LIST *list, void *data){
     return 1;
 }
 
-// Salva a estrutura DATA em uma variável, passa para o próximo nó e remove ele, e depois retorna a variável:
+// Função que salva a estrutura DATA em uma variável, passa para o próximo nó e remove ele, e depois retorna a variável:
+
 void *list_dequeue(LIST *list){
     if(list->head->next == list->tail){
         return NULL;

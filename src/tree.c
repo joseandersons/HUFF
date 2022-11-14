@@ -2,7 +2,7 @@
 #include "../include/list.h"
 #include "../include/main_panel.h"
 
-// Cria o nó e retorna o mesmo:
+// Função que cria o nó e retorna o mesmo:
 
 void print_pre_order(TREE *bt){
     if(bt){
@@ -16,6 +16,7 @@ void print_pre_order(TREE *bt){
 }
 
 // Cria o no e retorna o no
+
 struct tree *create_tree(void *data, struct tree *left, struct tree *right){
     struct tree *new_tree;
     if((new_tree = (struct tree*)malloc(sizeof(struct tree))) == NULL)return NULL;
@@ -28,6 +29,7 @@ struct tree *create_tree(void *data, struct tree *left, struct tree *right){
 }
 
 // Função para montar a árvore e retornar a mesma:
+
 TREE *mount_tree(LIST *list){
     while(list->head->next != list->tail){
         struct tree *leaf1, *leaf2;
@@ -93,7 +95,7 @@ int heightTree(struct tree *root){
     return left >= right ? left : right;
 }
 
-// Alocar uma nova tabela: 
+// Função que aloca uma nova tabela: 
 
 char **allocTable(int height, char **table){//declarei o table no despos,,, se tiver errado, depois mudar
     
@@ -110,7 +112,8 @@ char **allocTable(int height, char **table){//declarei o table no despos,,, se t
     return table;
 }
 
-// Percorre a árvore salvando o caminho percorrido até chegar a um nó folha:
+// Função que percorre a árvore salvando o caminho percorrido até chegar a um nó folha:
+
 void setTable(char **table, struct tree *root, char *path, int height){
     if(root == NULL) return;
 
@@ -137,6 +140,8 @@ void setTable(char **table, struct tree *root, char *path, int height){
     }
 }
 
+// Função que conta quanto de lixo tem na árvore:
+
 int trash_size(char **table, uint64_t *frequency){
     int bits = 0;
 
@@ -149,6 +154,8 @@ int trash_size(char **table, uint64_t *frequency){
     if(bits % 8 == 0) return 0;
     else return (8 - (bits % 8));
 }
+
+// Função que conta todos os nós da árvore:
 
 void tree_size(struct tree *root, int *size){
     if(root == NULL) return;
@@ -164,6 +171,8 @@ void tree_size(struct tree *root, int *size){
     tree_size(root->left, size);
     tree_size(root->right, size);
 }
+
+// Função que pega a árvore em pré-ordem e coloca ela em uma string:
 
 void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){
     if(root){

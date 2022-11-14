@@ -33,6 +33,8 @@ _Bool get_freq_table(int fd, uint64_t *array_freq){
 	return (size >= 0);
 }
 
+// Função que cria a Fila de Prioridades:
+
 _Bool create_queue(uint64_t *array_freq, LIST *list){
 	for(int i = 0; i < 256; i++){
 		if(array_freq[i] == 0)
@@ -68,6 +70,8 @@ _Bool create_queue(uint64_t *array_freq, LIST *list){
 	return 1;
 }
 
+// Função que escreve o cabeçalho do arquivo:
+
 _Bool write_header(int compressed_file, int trash, int size_tree, unsigned char *tree){
 	unsigned char first_byte, second_byte;
 
@@ -83,6 +87,8 @@ _Bool write_header(int compressed_file, int trash, int size_tree, unsigned char 
 
 	return 1;
 }
+
+// Função que escreve o Bit-Stream:
 
 _Bool write_bit_stream(int compressed_file, int fd, char **table){
 	unsigned char *buffer;
@@ -134,6 +140,8 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table){
 	return 1;
 }
 
+// Função que escreve todos os dados no arquivo compactado:
+
 _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, unsigned char *tree, char *file_name){
 	_Bool status;
 
@@ -163,6 +171,8 @@ _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *ar
 	return 1;
 }
 
+// Função principal que irá servir para compactar o arquivo:
+
 _Bool compress(int fd, char *file_name){
 	_Bool status;
 
@@ -186,11 +196,11 @@ _Bool compress(int fd, char *file_name){
 		return 0;
 	}
 
-	TREE *tree = mount_tree(list);//montar a arvore
+	TREE *tree = mount_tree(list); // montar a arvore
 	if(!tree)
 		return 0;
 
-	int height = heightTree(tree);
+	int height = heightTree(tree); // saber o tamanho da árvore
 
 	char **table = NULL;
 
