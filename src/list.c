@@ -1,10 +1,7 @@
 #include "../include/list.h"
+//...//
 #include "../include/tree.h"
-
-// Imprime a mensagem de erro caso aconteça:
-void error(char *msg, int code){
-    printf(ERROR "%s\n", msg);
-}
+#include "../include/helpful.h"
 
 // Cria uma lista dinâmica a partir da estrutura da Fila:
 LIST *list_create(){
@@ -41,16 +38,18 @@ LIST *list_create(){
 
 // Limpa todos os nós da fila dinâmica:
 
-void list_clear(LIST *list){
+_Bool list_clear(LIST *list){
     NODE *aux, *parent;
     
     if(!list){
-        error("Error: list doesn't exist\n", -1);
+        error("Error: list doesn't exist\n");
+        return 0;
     }
     
     parent = list->head;
     if(parent->next == list->tail){
-        error("Error: empty list\n", -2);
+        error("Error: empty list\n");
+        return 0;
     }
     
     aux = parent->next;
@@ -59,13 +58,16 @@ void list_clear(LIST *list){
         free(aux);
         aux = parent->next;
     }
+
+    return 1;
 }
 
 // Exclui a lista dinâmica:
 
-void list_delete(LIST **list){
+_Bool list_delete(LIST **list){
     if(!list){
-        error("Error: list doesn't exist\n", -1);
+        error("Error: list doesn't exist\n");
+        return 0;
     }
     
     LIST *aux;
@@ -83,17 +85,21 @@ void list_delete(LIST **list){
     aux = NULL;
     
     *list = aux;
+
+    return 1;
 }
 
 // Imprime a lista dinâmica da estrutura Fila:
 
-void list_print(LIST *list){
+_Bool list_print(LIST *list){
     if(!list){
-        error("Error: list doesn't exist\n", -1);
+        error("Error: list doesn't exist\n");
+        return 0;
     }
     
     if(list->head->next == list->tail){
-        error("Error: empty list\n", -2);
+        error("Error: empty list\n");
+        return 0;
     }
     
     NODE *aux;
@@ -106,10 +112,12 @@ void list_print(LIST *list){
         uint64_t *freq = (uint64_t *)data->freq;
         unsigned char *byte = (unsigned char  *)data->byte;
 
-        printf("[%c]\t->\t[%ld]\n", *byte, *freq);
+        printf("[%x]\t->\t[%ld]\n", *byte, *freq);
 
         aux = aux->next;
     }
+
+    return 1;
 }
 
 // Inserir lista dinâmica de forma crescente:

@@ -1,4 +1,6 @@
 #include "../include/main_panel.h"
+//...//
+#include "../include/helpful.h"
 #include "../include/list.h"
 #include "../include/compress.h"
 
@@ -33,7 +35,7 @@ _Bool select_options(short options, char *name){
 	int fd = open(name, O_RDONLY);
 
 	if(fd == -1){
-		error("Error: File doesn't exist or permission denied!", 1);
+		error("Error: File doesn't exist or permission denied!");
 		return 0;
 	}
 
@@ -44,11 +46,16 @@ _Bool select_options(short options, char *name){
 
 		//return status;
 	}else if(options == 2){
-		printf("Compactando...\n");
+		printf("Compressing...\n");
 
 		_Bool status = compress(fd, name);
+		if(!status){
+			error("Compression failed!");
+			return 0;
+		}
 
-		return status;
+		printf("Successfully compressed!\n");
+		return 1;
 	}else if(options == 3){
 		usage();
 		return 1;
@@ -73,10 +80,8 @@ int main(int argc, char *argv[]){
 	}
 
 	_Bool status = select_options(option, argv[2]);
-	if(!status){
-		error("Compression failed!", 1);
+	if(!status)
 		return EXIT_FAILURE;
-	}
 
 	return 0;
 }

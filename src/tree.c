@@ -9,7 +9,7 @@ void print_pre_order(TREE *bt){
         DATA *data = (DATA *)bt->data;
         unsigned char *byte = (unsigned char *)data->byte;
 
-        printf("%c\n", *byte);
+        printf("%x\n", *byte);
         print_pre_order(bt->left);
         print_pre_order(bt->right);
     }
