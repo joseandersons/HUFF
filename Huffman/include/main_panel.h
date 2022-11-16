@@ -13,5 +13,7 @@
 void fatal();
 void usage();
 short parse_options(char *argv[]);
+char *get_new_name(int argc, char *argv[], short options);
+_Bool select_options(int argc, char *argv[], short options);
 
 #endif

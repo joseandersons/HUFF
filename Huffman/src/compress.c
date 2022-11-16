@@ -141,39 +141,25 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table){
 
 // Função que escreve todos os dados no arquivo compactado:
 
-_Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, unsigned char *tree, char *file_name){
+_Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, unsigned char *tree, int new_fd){
 	_Bool status;
 
-	char *cpy, *state, *comp_file_name;
-
-	cpy = strdup(file_name);
-	if(!cpy)
-		return 0;
-
-	comp_file_name = strtok_r(cpy, ".", &state);
-	comp_file_name = strcat(comp_file_name, ".huff");
-
-	int compressed_file = open(comp_file_name, O_WRONLY | O_CREAT, 0764);
-	if(compressed_file < 0)
-		return 0;
-
-	status = write_header(compressed_file, trash, size_tree, tree);
+	status = write_header(new_fd, trash, size_tree, tree);
 	if(!status)
 		return 0;
 
 	lseek(fd, 0, SEEK_SET);
 
-	status = write_bit_stream(compressed_file, fd, table);
+	status = write_bit_stream(new_fd, fd, table);
 	if(!status)
 		return 0;
 
-	free(cpy);
 	return 1;
 }
 
 // Função principal que irá servir para compactar o arquivo:
 
-_Bool compress(int fd, char *file_name){
+_Bool compress(int fd, int new_fd){
 	_Bool status;
 
 	uint64_t *array_freq = (uint64_t *)malloc(sizeof(uint64_t)*256);
@@ -200,9 +186,6 @@ _Bool compress(int fd, char *file_name){
 	if(!tree)
 		return 0;
 
-	print_pre_order(tree);
-	printf("\n");
-
 	int height = heightTree(tree); // saber o tamanho da árvore
 
 	char **table = NULL;
@@ -221,7 +204,7 @@ _Bool compress(int fd, char *file_name){
 	int counter = 0;
 	get_tree(tree, tree_str, size_tree, &counter);
 
-	status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, file_name);
+	status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, new_fd);
 	if(!status)
 		return 0;
 

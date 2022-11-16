@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 
+#include "tree.h"
 
 unsigned int bit_is_set(unsigned char byte, int i);
 int size_for_trash(unsigned char byte);
