@@ -201,3 +201,43 @@ void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){
     if(*counter == size_tree)
         str[*counter] = '\0';
 }
+
+TREE *create_node(unsigned char element){
+    TREE *new_node = (TREE*)malloc(sizeof(TREE));
+    new_node->data = malloc(sizeof(unsigned char));
+    memcpy(new_node->data, &element, sizeof(unsigned char));
+    new_node->left = NULL;
+    new_node->right = NULL;
+    return new_node;
+}
+
+TREE *mount_tres_for_decompress(TREE *tree, int *i,  unsigned char *bytes, int size_max){
+
+    if((*i) >= size_max)return tree;
+
+    else{     
+        if(bytes[*i] == '\\'){
+            
+            (*i)++;
+            tree = create_node(bytes[*i]);
+            (*i)++;
+        }
+        else{
+            
+            if(bytes[*i] == '*'){
+            
+                tree = create_node(bytes[*i]);
+                (*i)++;
+                tree->left = mount_tres_for_decompress(tree, i, bytes, size_max);
+                tree->right = mount_tres_for_decompress(tree, i, bytes, size_max);
+            }
+            else{
+               
+                tree = create_node(bytes[*i]);
+                (*i)++;
+                return tree;
+            }
+        }
+        return tree;
+    }
+}
