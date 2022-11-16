@@ -9,6 +9,7 @@
 #include <string.h>
 #include <fcntl.h>
 
+
 void fatal();
 void usage();
 short parse_options(char *argv[]);
