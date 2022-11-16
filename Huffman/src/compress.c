@@ -73,6 +73,7 @@ _Bool create_queue(uint64_t *array_freq, LIST *list){
 // Função que escreve o cabeçalho do arquivo:
 
 _Bool write_header(int compressed_file, int trash, int size_tree, unsigned char *tree){
+	ssize_t size;
 	unsigned char first_byte, second_byte;
 
 	unsigned char byte_trash = (unsigned char)(trash << 5);
@@ -81,9 +82,14 @@ _Bool write_header(int compressed_file, int trash, int size_tree, unsigned char 
 	first_byte = byte_trash | byte_size_tree;
 	second_byte = (unsigned char)size_tree;
 
-	write(compressed_file, &first_byte, 1);
-	write(compressed_file, &second_byte, 1);
-	write(compressed_file, tree, size_tree);
+	size = write(compressed_file, &first_byte, 1);
+	if(size == -1)return 0;
+	
+	size = write(compressed_file, &second_byte, 1);
+	if(size == -1)return 0;
+
+	size = write(compressed_file, tree, size_tree);
+	if(size == -1)return 0;
 
 	return 1;
 }

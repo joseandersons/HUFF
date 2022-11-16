@@ -55,7 +55,8 @@ _Bool decompress(int fd, int new_fd){
 
     memset(bytes, 0, pos);
 
-    read(fd, bytes, pos);
+    ssize_t size = read(fd, bytes, pos);
+    if(size == -1)return 0;
     int size_trash = size_for_trash(bytes[0]);
     int size_tree = size_for_tree(bytes[0], bytes[1]);
 
