@@ -31,9 +31,10 @@ short parse_options(char *argv[]){
 	}
 }
 
-_Bool select_options(short options, char *name){
-	int fd = open(name, O_RDONLY);
+_Bool select_options(int argc, char *argv[], short options){
+	char name_file = argv[2];
 
+	int fd = open(name_file, O_RDONLY);
 	if(fd == -1){
 		error("Error: File doesn't exist or permission denied!");
 		return 0;
@@ -42,12 +43,23 @@ _Bool select_options(short options, char *name){
 	if(options == 1){
 		printf("Descompactando...\n");
 
-		//_Bool status = decompress(fd);
+		printf("Abrindo arquivo...\n");
+		int new_fd = open(name_file, O_WRONLY | O_CREAT, 0764);
 
-		//return status;
+		if(new_fd == -1){
+			error("Error: File doesn't exist or permission denied!");
+			return 0;
+		}
+
+		_Bool status = decompress(name);
+		if(!status){
+			error("Decompression failed!");
+			return 0;
+		}
+
+		return status;
 	}else if(options == 2){
 		printf("Compressing...\n");
-
 		_Bool status = compress(fd, name);
 		if(!status){
 			error("Compression failed!");
@@ -79,7 +91,7 @@ int main(int argc, char *argv[]){
 		return EXIT_FAILURE;
 	}
 
-	_Bool status = select_options(option, argv[2]);
+	_Bool status = select_options(option, argv);
 	if(!status)
 		return EXIT_FAILURE;
 

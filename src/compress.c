@@ -128,7 +128,6 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table){
             	}
         	}
     	}
-        
     }
 
     if(bit_amount != 0){
@@ -163,6 +162,7 @@ _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *ar
 		return 0;
 
 	lseek(fd, 0, SEEK_SET);
+
 	status = write_bit_stream(compressed_file, fd, table);
 	if(!status)
 		return 0;
@@ -199,6 +199,9 @@ _Bool compress(int fd, char *file_name){
 	TREE *tree = mount_tree(list); // montar a arvore
 	if(!tree)
 		return 0;
+
+	print_pre_order(tree);
+	printf("\n");
 
 	int height = heightTree(tree); // saber o tamanho da árvore
 

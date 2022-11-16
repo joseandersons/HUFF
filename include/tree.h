@@ -16,6 +16,7 @@ struct tree{
     struct tree *left, *right;
 };
 
+_Bool insert_node(TREE **bt, void *data);
 TREE *mount_tree(LIST *list);
 TREE *create_tree(void *data, TREE *left, TREE *right);
 int heightTree(TREE *root);

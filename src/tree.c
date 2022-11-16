@@ -9,10 +9,41 @@ void print_pre_order(TREE *bt){
         DATA *data = (DATA *)bt->data;
         unsigned char *byte = (unsigned char *)data->byte;
 
-        printf("%x\n", *byte);
+        printf("%c", *byte);
         print_pre_order(bt->left);
         print_pre_order(bt->right);
     }
+}
+
+_Bool insert_node(TREE **bt, void *data){
+    if(!(*bt)){
+        *bt = create_tree(data, NULL, NULL);
+        return 1;
+    }
+
+    DATA *data_freq = (DATA *)data_freq                         ;
+    DATA *data_bt = (DATA *)(*bt)->data;
+    uint64_t *freq_bt = (uint64_t *)data_bt->freq;
+
+    uint64_t *freq_data = (uint64_t *)data_freq->freq;
+
+    if(*freq_data < *freq_bt){
+        if(!(*bt)->left){
+            (*bt)->left = create_tree(data, NULL, NULL);
+            return 1;
+        }
+        insert_node(bt, data);
+    }else if(*freq_data > *freq_bt){
+        if(!(*bt)->right){
+            (*bt)->right = create_tree(data, NULL, NULL);
+            return 1;
+        }
+        insert_node(bt, data);
+    }else{
+        return 0;
+    }
+
+    return 1;
 }
 
 // Cria o no e retorna o no
@@ -124,7 +155,6 @@ void setTable(char **table, struct tree *root, char *path, int height){
         unsigned char *byte_ptr = (unsigned char *)data->byte;
         unsigned char byte = *byte_ptr;
         strcpy(table[(int)byte],  path);
-        // ??????
     }
 
     else{
