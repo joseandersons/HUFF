@@ -60,7 +60,6 @@ _Bool create_queue(uint64_t *array_freq, LIST *list){
 		TREE *tree = create_tree(data, NULL, NULL);
 		if(!tree)
 			return 0;
-		// tree->data = data;
 
 		_Bool status = list_enqueue(list, tree);
 		if(!status)
@@ -165,55 +164,55 @@ _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *ar
 
 // Função principal que irá servir para compactar o arquivo:
 
-_Bool compress(int fd, int new_fd){
+_Bool compress(int fd, int new_fd){ // O 1º é o arquivo lido e o 2º é o aruquivo novo que receberá a compactação do 1º
 	_Bool status;
 
-	uint64_t *array_freq = (uint64_t *)malloc(sizeof(uint64_t)*256);
+	uint64_t *array_freq = (uint64_t *)malloc(sizeof(uint64_t)*256); // Aloca um array de ponteiros do tipo "uint_64" com 256 posições
 	if(!array_freq){
 		return 0;
 	}
 	
-	status = get_freq_table(fd, array_freq);
+	status = get_freq_table(fd, array_freq); // Obtém a lista de frequência dos bits do arquivo lido
 	if(!status){
 		return 0;
 	}
 
-	LIST *list = list_create();;
+	LIST *list = list_create(); // Cria a lista que irá ser aplicado na fila de prioridade
 	if(!list){
 		return 0;
 	}
 
-	status = create_queue(array_freq, list);
+	status = create_queue(array_freq, list); // Cria a fila de prioridade
 	if(!status){
 		return 0;
 	}
 
-	TREE *tree = mount_tree(list); // montar a arvore
+	TREE *tree = mount_tree(list); // Montar a árvore
 	if(!tree)
 		return 0;
 
-	int height = heightTree(tree); // saber o tamanho da árvore
+	int height = heightTree(tree); // Saber o tamanho da árvore
 
 	char **table = NULL;
 
-	table = allocTable(height + 1, table);
-	setTable(table, tree, "", height + 1);
+	table = allocTable(height + 1, table); // Alocar a matriz "dicionário"
+	setTable(table, tree, "", height + 1); // Iniciar a matriz "dicionário" com cada os caminhos da árvore em cada linha
 
 	int trash = 0;
 	int size_tree = 0;
 
-	trash = trash_size(table, array_freq);
-	tree_size(tree, &size_tree);
+	trash = trash_size(table, array_freq); // Retorna a quantidade de lixo existente do fluxo de bits da árvore
+	tree_size(tree, &size_tree); // Sobrescreve a variável "size_tree", que consequentemente é o tamanho da árvore
 
-	unsigned char tree_str[8192];
+	unsigned char tree_str[8192]; // Cria o array de char que irá ser utilizado posteriormente
 
 	int counter = 0;
-	get_tree(tree, tree_str, size_tree, &counter);
+	get_tree(tree, tree_str, size_tree, &counter); // Sobrescreve o array de char "tree_str" em pré-ordem baseado na árvore
 
-	status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, new_fd);
+	status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, new_fd); // Escreve um novo arquivo já compactado
 	if(!status)
 		return 0;
 
-	free(array_freq);
+	free(array_freq); // Libera a variável após o uso dela, para não haver vazamento de memória
 	return 1;
 }

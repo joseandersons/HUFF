@@ -128,7 +128,7 @@ int heightTree(struct tree *root){
 
 // Função que aloca uma nova tabela: 
 
-char **allocTable(int height, char **table){//declarei o table no despos,,, se tiver errado, depois mudar
+char **allocTable(int height, char **table){
     
     int i = 0;
 
@@ -137,7 +137,7 @@ char **allocTable(int height, char **table){//declarei o table no despos,,, se t
         return NULL;
 
     for(i = 0; i < 256; i++){
-        table[i] = calloc(height, sizeof(char));
+        table[i] = calloc(height, sizeof(char)); // Percorre a matriz "dicionário" e inicia como 0 para cada linha dela
     }
 
     return table;
@@ -154,14 +154,13 @@ void setTable(char **table, struct tree *root, char *path, int height){
         DATA *data = (DATA *)root->data;
         unsigned char *byte_ptr = (unsigned char *)data->byte;
         unsigned char byte = *byte_ptr;
-        strcpy(table[(int)byte],  path);
-    }
+        strcpy(table[(int)byte], path);
 
-    else{
+    } else {
         strcpy(left, path);
         strcpy(right, path);
 
-        //concatenando na string: adiciona 0 se for pra esqurda e 1 se for pra direita
+        // Concatenando na string: adiciona 0 se for para a esquerda e 1 se for para a direita
         strcat(left, "0");
         strcat(right, "1");
 
@@ -173,7 +172,7 @@ void setTable(char **table, struct tree *root, char *path, int height){
 // Função que conta quanto de lixo tem na árvore:
 
 int trash_size(char **table, uint64_t *frequency){
-    int bits = 0;
+    uint64_t bits = 0;
 
     for(int i = 0; i < 256; i++){
         if(frequency[i] != 0){
