@@ -4,8 +4,6 @@
 #include "../include/tree.h"
 #include "../include/helpful.h"
 
-#define BLOCK_SIZE 8192 //8 KiB
-
 // Obtém a frequência da tabela Hash:
 
 _Bool get_freq_table(int fd, uint64_t *array_freq){

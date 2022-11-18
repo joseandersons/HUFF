@@ -1,5 +1,6 @@
 #include "../include/decompress.h"
 #include "../include/tree.h"
+#include "../include/compress.h"
 
 unsigned int bit_is_set(unsigned char byte, int i){
     unsigned char mask = (1 << i);
@@ -17,7 +18,12 @@ int size_for_tree(unsigned char byte1, unsigned char byte2){
 }
 
 _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd, int size_trash){
+    unsigned char *buffer;
     TREE *aux = tree;
+    int count = 0;
+
+    buffer = (unsigned char *)malloc(BLOCK_SIZE);
+	if(!buffer)return 0;
 
     while(*i < pos){
 
@@ -30,13 +36,20 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
             
             if(!aux->left && !aux->right){
                 unsigned char *byte = (unsigned char *)aux->data;
-                int status = write(new_fd, byte, 1);
-                if(status == -1)return 0;
+                buffer[count] = *byte;
+                count++;
                 aux = tree;
+            }
+
+            if(count >= BLOCK_SIZE){
+                ssize_t status = write(new_fd, buffer, count);
+                if(status == -1)return 0;
+                count = 0;
             }
         }
         (*i)++;
     }
+
     return 1;
 }
 

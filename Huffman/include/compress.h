@@ -6,9 +6,10 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <fcntl.h>
-
 //--//
 #include "list.h"
+
+#define BLOCK_SIZE 8192 //8 KiB
 
 _Bool get_freq_table(int fd, uint64_t *ptr);
 _Bool mount_queue(uint64_t *array_freq, LIST *list);
