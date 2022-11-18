@@ -60,7 +60,7 @@ _Bool create_queue(uint64_t *array_freq, LIST *list){
 		TREE *tree = create_tree(data, NULL, NULL);
 		if(!tree)
 			return 0;
-		tree->data = data;
+		// tree->data = data;
 
 		_Bool status = list_enqueue(list, tree);
 		if(!status)
