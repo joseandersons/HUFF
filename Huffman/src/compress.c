@@ -44,7 +44,7 @@ _Bool create_queue(uint64_t *array_freq, LIST *list){
 		if(!data)
 			return 0;
 
-		char *byte = malloc(1);
+		unsigned char *byte = malloc(1);
 		if(!byte)
 			return 0;
 		*byte = i;
