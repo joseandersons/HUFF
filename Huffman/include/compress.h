@@ -11,7 +11,7 @@
 #include "list.h"
 
 _Bool get_freq_table(int fd, uint64_t *ptr);
-_Bool create_queue(uint64_t *array_freq, LIST *list);
+_Bool mount_queue(uint64_t *array_freq, LIST *list);
 _Bool compress(int fd, int new_fd);
 _Bool write_bit_stream(int compressed_file, int fd, char **table);
 _Bool write_header(int compressed_file, int trash, int size_tree, unsigned char *tree);
