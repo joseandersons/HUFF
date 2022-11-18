@@ -1,0 +1,330 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"list",
+				"list_print"
+			],
+			[
+				"ta",
+				"tam"
+			],
+			[
+				"graph",
+				"graph_mount"
+			],
+			[
+				"gra",
+				"graph_create"
+			],
+			[
+				"create",
+				"graph_create"
+			],
+			[
+				"s",
+				"size"
+			],
+			[
+				"IT",
+				"INT_MAX"
+			],
+			[
+				"ad",
+				"adj_list"
+			],
+			[
+				"crea",
+				"create_queue"
+			],
+			[
+				"No",
+				"NoDireito"
+			],
+			[
+				"tree",
+				"tree_create"
+			],
+			[
+				"prit",
+				"printf"
+			],
+			[
+				"num",
+				"num_elements"
+			],
+			[
+				"ha",
+				"hash_calculate"
+			],
+			[
+				"new",
+				"new_len"
+			],
+			[
+				"rea",
+				"hash_rehashing"
+			],
+			[
+				"n",
+				"num_comp"
+			],
+			[
+				"has",
+				"hash_calculate"
+			],
+			[
+				"res",
+				"resul"
+			],
+			[
+				"node",
+				"node_new"
+			],
+			[
+				"nu",
+				"num_trocas"
+			],
+			[
+				"stack",
+				"stack_col"
+			],
+			[
+				"stackp",
+				"stack_pop"
+			],
+			[
+				"no",
+				"node_stack_s"
+			],
+			[
+				"nod",
+				"node_stack_s"
+			],
+			[
+				"sta",
+				"node_stack_s"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/higor/Documentos/programacao/c/t2",
+		"/home/higor/Documentos/programacao/c/teste.c",
+		"/home/higor/Documentos/programacao/c/txt",
+		"/home/higor/Documentos/programacao/c/teste",
+		"/home/higor/Documentos/programacao/c/invert.c",
+		"/home/higor/Downloads/0fb3f2d8e15d2782e14c82babfd7bbcd494b992c.out",
+		"/home/higor/Downloads/863db540b6442353dd704ab40049351a03802698.out",
+		"/home/higor/Downloads/881c8fb7433965e6ca16d2e0ea595267ee2f1c4e.out",
+		"/home/higor/Downloads/a08a0a9069e36252418c9894b210ce7738b091f6.out",
+		"/home/higor/Downloads/a8276d694ea2031f08ee6dff81a72062fd00469a.out",
+		"/home/higor/Downloads/Em.c",
+		"/home/higor/Documentos/programacao/pilhas.h",
+		"/home/higor/Documentos/programacao/projeto/include/main.h",
+		"/home/higor/Documentos/programacao/projeto/src/main.c",
+		"/home/higor/Documentos/programacao/projeto/src/pilhas.c",
+		"/home/higor/.ssh/git/id_rsa.pub",
+		"/home/higor/Documentos/programacao/c/list.c",
+		"/home/higor/Documentos/programacao/projeto/teste.txt",
+		"/home/higor/Documentos/programacao/projeto/pilhas.h",
+		"/home/higor/Documentos/programacao/projeto/pilhas.c",
+		"/home/higor/Documentos/programacao/projeto/Makefile",
+		"/home/higor/Documentos/programacao/projeto/main.c",
+		"/home/higor/Documentos/programacao/projeto/arq2",
+		"/home/higor/Documentos/programacao/projeto/arq",
+		"/home/higor/Documentos/programacao/c/pilhas.h",
+		"/home/higor/Documentos/programacao/c/Pilhas.c",
+		"/home/higor/Documentos/programacao/c/4584.out",
+		"/home/higor/Documentos/programacao/c/4584.in",
+		"/home/higor/Documentos/programacao/c/4586.out",
+		"/home/higor/Documentos/programacao/c/4586.in"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 107.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Z",
+			"pr",
+			"free",
+			"*tam",
+			"graph->vertices[vertex1]",
+			"list_pr",
+			"(\"",
+			"| ",
+			"1",
+			"\n                ",
+			"raiz",
+			"== ",
+			"i",
+			"size",
+			"ç",
+			"fd2",
+			"/*",
+			"m",
+			"93",
+			" \\\\\\",
+			"    ",
+			"print",
+			"n",
+			"printf",
+			"}\n",
+			"if(buff[i] == '['){\n                printf(\"%c\\n\", buff[i]);\n            }",
+			"c"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"tam_aux",
+			"graph->vertice[vertex1]",
+			"i"
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "Makefile.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 263.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 592.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
