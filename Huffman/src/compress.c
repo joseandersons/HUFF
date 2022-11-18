@@ -30,6 +30,8 @@ _Bool get_freq_table(int fd, uint64_t *array_freq){
 
 	free(buffer);
 
+
+	printf("S: %lu\n", size);
 	return (size >= 0);
 }
 
@@ -172,7 +174,12 @@ _Bool compress(int fd, int new_fd){ // O 1º é o arquivo lido e o 2º é o aruq
 		return 0;
 	}
 	
+<<<<<<< HEAD
 	status = get_freq_table(fd, array_freq); // Obtém a lista de frequência dos bits do arquivo lido
+=======
+	status = get_freq_table(fd, array_freq);
+	printf("T: %i\n", status);
+>>>>>>> 738b489 (.)
 	if(!status){
 		return 0;
 	}
