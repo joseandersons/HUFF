@@ -5,6 +5,7 @@
 #include "../include/compress.h"
 #include "../include/decompress.h"
 
+
 void usage(){
 	printf(RESET WHITE_INTENSE "Welcome to "
 		   BLINK ORANGE "%s\n" 

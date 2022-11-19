@@ -4,6 +4,7 @@
         "lista.h": "c",
         "tree.h": "c",
         "decompress.h": "c",
-        "compress.h": "c"
+        "compress.h": "c",
+        "helpful.h": "c"
     }
 }
