@@ -155,12 +155,12 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table){
 _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, unsigned char *tree, int new_fd){
 	_Bool status;
 
-	status = write_header(new_fd, trash, size_tree, tree);
+	status = write_header(new_fd, trash, size_tree, tree); // Escreve o cabeçalho do arquivo
 	if(!status)return 0;
 
 	lseek(fd, 0, SEEK_SET);
 
-	status = write_bit_stream(new_fd, fd, table);
+	status = write_bit_stream(new_fd, fd, table); //
 	if(!status)return 0;
 
 	return 1;
@@ -168,7 +168,7 @@ _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *ar
 
 // Função principal que irá servir para compactar o arquivo:
 
-_Bool compress(int fd, int new_fd){ // O 1º é o arquivo lido e o 2º é o aruquivo novo que receberá a compactação do 1º
+_Bool compress(int fd, int new_fd){ // O 1º é o arquivo lido e o 2º é o arquivo novo que receberá a compactação do 1º
 	_Bool status;
 
 	uint64_t *array_freq = (uint64_t *)malloc(sizeof(uint64_t)*256); // Aloca um array de ponteiros do tipo "uint_64" com 256 posições

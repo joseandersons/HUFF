@@ -7,15 +7,21 @@ unsigned int bit_is_set(unsigned char byte, int i){
     return byte & mask;
 }
 
-int size_for_trash(unsigned char byte){
+// Função para saber o tamanho do lixo:
+
+int size_for_trash(unsigned char byte){ // Recebe o byte que contém o lixo
     byte = byte >> 5;
     return (int)byte;
 }
 
-int size_for_tree(unsigned char byte1, unsigned char byte2){
-    unsigned char mask = 31;
+// Função para saber o tamanho da árvore que será criada:
+
+int size_for_tree(unsigned char byte1, unsigned char byte2){ // 
+    unsigned char mask = 31; // 
     return (int)(((byte1 & mask) << 8) | byte2);
 }
+
+// Função para escrever o arquivo já descompactado:
 
 _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd, int size_trash){
     unsigned char *buffer;
@@ -27,7 +33,7 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
 
     while(*i < pos){
 
-        for(int j = 7; j  >= 0; j--){
+        for(int j = 7; j >= 0; j--){
             if(*i == pos-1 && j < size_trash)return 1;
             if(bit_is_set(bytes[*i], j))
                 aux = aux->right;
@@ -53,6 +59,8 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
     return 1;
 }
 
+// Função principal que irá servir para descompactação:
+
 _Bool decompress(int fd, int new_fd){
 
     unsigned char *bytes;
@@ -73,7 +81,8 @@ _Bool decompress(int fd, int new_fd){
     int size_trash = size_for_trash(bytes[0]);
     int size_tree = size_for_tree(bytes[0], bytes[1]);
 
-    int i = 2, size_max = size_tree + 2; // byte 0 é tam da thash e 1 é tam da tree
+    // "i" inicia em 2 para ler os 2 primeiros bytes e o size_max é o tamanho da árvore mais os 2 bytes
+    int i = 2, size_max = size_tree + 2; 
     
     TREE *tree = mount_tres_for_decompress(NULL, &i, bytes, size_max);
     close(fd);
