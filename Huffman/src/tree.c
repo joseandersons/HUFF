@@ -2,8 +2,11 @@
 #include "../include/list.h"
 #include "../include/main_panel.h"
 
-// Função que cria o nó e retorna o mesmo:
-
+/*
+    Printa, recursivamente, os itens (bytes) da árvore de Huffman em pré-ordem. (DEBUG)
+    
+    @param      z
+*/
 void print_pre_order(TREE *bt){
     if(bt){
         DATA *data = (DATA *)bt->data;
