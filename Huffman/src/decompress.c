@@ -2,12 +2,23 @@
 #include "../include/tree.h"
 #include "../include/compress.h"
 
+/*
+    A função bit_is_set() irá verificar se o bit na posição i está setado (retorna 1) ou não (retorna 0).
+
+    @param          byte            Byte a ser analisado
+    @param          i               Posição do bit
+*/
 unsigned int bit_is_set(unsigned char byte, int i){
     unsigned char mask = (1 << i);
     return byte & mask;
 }
 
-// Função para saber o tamanho do lixo:
+/*
+    A função size_for_trash() recebe o primeiro byte do arquivo e realiza um shift bit de 5 para direita,
+    retornando o tamanho do lixo.
+
+    @param          byte            Primeiro byte do arquivo comprimido
+*/
 
 int size_for_trash(unsigned char byte){ // Recebe o byte que contém o lixo
     byte = byte >> 5;
@@ -25,10 +36,19 @@ int size_for_tree(unsigned char byte1, unsigned char byte2){ //
 
 /*
     A função write_files() irá descomprimir os dados e, no final, escrever todos os bytes no arquivo descomprimido.
-    Uma repetição será executada enquanto o índice i for menor que a quantidade de bytes do arquivo. Nesse laço, será
-    verificado se o b 
+    Uma repetição será executada até chegar no final do arquivo. Dentro desse laço, teremos outra repetição que visa
+    percorrer a árvore de huffman por meio do caminho de cada byte. Na primeira condição, será verificado que, caso
+    seja o último byte, o bit só deverá ser setado caso a posição deste seja menor do que o tamanho do lixo. Na segunda
+    condição, caso o bit seja 1, navegaremos na árvore pela direita, caso contrário, navegaremos pela árvore pela esquerda.
+    Essa verificação deve ser feita até se chegar em um nó folha, etapa em que será armazenado o byte no buffer. Quando o
+    arquivo finalmente chegar no final, todos os bytes armazenados no buffer serão escritos diretamnete no novo arquivo
+    descomprimido.
 
-
+    @param          tree            Árvore de huffman
+    @param          i               Índice para leitura dos bytes do arquivo
+    @param          pos             Tamanho da string do arquivo
+    @param          size_trash      Tamanho do lixo do último byte
+    
 */
 
 _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd, int size_trash){
