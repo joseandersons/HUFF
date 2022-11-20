@@ -25,14 +25,21 @@ int size_for_trash(unsigned char byte){ // Recebe o byte que contém o lixo
     return (int)byte;
 }
 
-// Função para saber o tamanho da árvore que será criada:
+/*
+    A função size_for_tree() retorna o tamanho da árvore e irá utilizar o número 31 em binário como mask para "zerar" os bits
+    do lixo do primeiro byte e manter apenas os bits da árvore que estarão no primeiro byte. O "ou" com o segundo byte servirá
+    para concatenar todos os bits.
+
+    @param          byte1       Primeiro byte do arquivo comprimido
+    @param          byte2       Segundo byte do arquivo comprimido
+
+*/
 
 int size_for_tree(unsigned char byte1, unsigned char byte2){ // 
     unsigned char mask = 31; // 
     return (int)(((byte1 & mask) << 8) | byte2);
 }
 
-// Função para escrever o arquivo já descompactado:
 
 /*
     A função write_files() irá descomprimir os dados e, no final, escrever todos os bytes no arquivo descomprimido.
@@ -94,6 +101,7 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
     @param           fd          Arquivo comprimido
     @param           newfd       Arquivo onde serão escritos os dados descomprimidos
 */
+
 _Bool decompress(int fd, int new_fd){
 
     unsigned char *bytes;
