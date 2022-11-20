@@ -3,7 +3,11 @@
 #include "../include/tree.h"
 #include "../include/helpful.h"
 
-// Função que cria uma lista dinâmica a partir da estrutura da Fila:
+/*  
+
+    A função list_create() serve somente para criar a lista encadeada e retorna a mesma no final, caso não consiga retorna NULL.
+
+*/
 
 LIST *list_create(){
     LIST *new_list;
@@ -37,7 +41,14 @@ LIST *list_create(){
     return new_list;
 }
 
-// Função que limpa todos os nós da fila dinâmica:
+/*  
+
+    A função list_clear() serve para limpar todos os nós da lista encadeada e retorna 1 caso dê certo,
+    para caso de retornar 0 é porque possivelmente ela já tenha chegado vazia.
+
+    @param          list            Lista que será limpada
+
+*/
 
 _Bool list_clear(LIST *list){
     NODE *aux, *parent;
@@ -63,7 +74,14 @@ _Bool list_clear(LIST *list){
     return 1;
 }
 
-// Função que exclui a lista dinâmica:
+/*  
+
+    A função list_delete() serve para deletar a lista e retorna 1 caso dê certo, caso dê errado ela retorna 0. 
+    A list_delete() necessita da list_clear() para que seja limpado todos os nós antes de dar o devido free() na lista.
+
+    @param          list            Lista que será deletada
+
+*/
 
 _Bool list_delete(LIST **list){
     if(!list){
@@ -90,7 +108,14 @@ _Bool list_delete(LIST **list){
     return 1;
 }
 
-// Função que imprime a lista dinâmica da estrutura Fila:
+/*  
+
+    A função list_print() serve para imprimir a lista encadeada.
+    Utiliza-se um auxiliar para assim não se alterar o "original" e perder a referência do mesmo.
+
+    @param          list            Lista que será imprimida na tela
+
+*/
 
 _Bool list_print(LIST *list){
     if(!list){
@@ -121,7 +146,19 @@ _Bool list_print(LIST *list){
     return 1;
 }
 
-// Função que insere na lista dinâmica de forma crescente:
+/*  
+
+    A função list_enqueue() serve para introduzir um nó na lista de forma crescente.
+    Ele primeiro aloca o espaço de memória para o nó, caso dê errado ele já retorna "0". Cria-se um auxiliar para receber a
+    cabeça da lista e não alterar acidentalmente algo da lista "original". Faz os devidos "castings" para os dados que serão 
+    introduzidos e ao mesmo sendo utilizados por condicionais posteriormente. Dentro do laço ele percorre a lista até achar 
+    um dado que seja menor ou igual ao dado que será introduzido, quando achado ele insere o nó na lista. Já com o nó introduzido, 
+    incrementa-se o tamanho da lista, para controle de tamanho, e no final retorna "1" caso dê tudo certo.
+
+    @param          list            Lista que será feita as alterações
+    @param          data            Dado que será introduzido à lista
+
+*/
 
 _Bool list_enqueue(LIST *list, void *data){
     NODE *new_node, *aux, *parent;
@@ -163,7 +200,16 @@ _Bool list_enqueue(LIST *list, void *data){
     return 1;
 }
 
-// Função que salva a estrutura DATA em uma variável, passa para o próximo nó e remove ele, e depois retorna a variável:
+/*  
+
+    A função list_dequeue() serve para retirar o primeiro dado da lista.
+    Pergunta-se antes se a lista está vazia, caso esteja retorna um dado NULL, caso não entre na condicional, ele cria
+    auxiliares para salvar os dados que serão removidos, passa a cabeça da lista para o próximo nó e decrementa o tamanho da lista.
+    No final ele faz o free() para a variável auxiliar, para não haver vazamento de memória, e retorna o dado que será removido.
+
+    @param          list            Lista ao qual terá o dado removido
+
+*/
 
 void *list_dequeue(LIST *list){
     if(list->head->next == list->tail){
