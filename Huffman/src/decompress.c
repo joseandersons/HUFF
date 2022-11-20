@@ -62,7 +62,6 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
 // Função principal que irá servir para descompactação:
 
 _Bool decompress(int fd, int new_fd){
-
     unsigned char *bytes;
 
     if(fd == -1)return 0;
@@ -78,6 +77,7 @@ _Bool decompress(int fd, int new_fd){
 
     ssize_t size = read(fd, bytes, pos);
     if(size == -1)return 0;
+
     int size_trash = size_for_trash(bytes[0]);
     int size_tree = size_for_tree(bytes[0], bytes[1]);
 
