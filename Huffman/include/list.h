@@ -38,6 +38,5 @@ _Bool list_delete(struct lists_s **list);
 _Bool list_print(struct lists_s *list);
 _Bool list_clear(struct lists_s *list);
 void *list_dequeue(LIST *list);
-void list_insert(struct lists_s *list, char item);
 
 #endif

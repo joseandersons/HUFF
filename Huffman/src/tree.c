@@ -128,7 +128,7 @@ int heightTree(struct tree *root){
 
 // Função que aloca uma nova tabela: 
 
-char **allocTable(int height, char **table){//declarei o table no despos,,, se tiver errado, depois mudar
+char **allocTable(int height, char **table){
     
     int i = 0;
 
@@ -137,7 +137,7 @@ char **allocTable(int height, char **table){//declarei o table no despos,,, se t
         return NULL;
 
     for(i = 0; i < 256; i++){
-        table[i] = calloc(height, sizeof(char));
+        table[i] = calloc(height, sizeof(char)); // Percorre a matriz "dicionário" e inicia como 0 para cada linha dela
     }
 
     return table;
@@ -154,14 +154,13 @@ void setTable(char **table, struct tree *root, char *path, int height){
         DATA *data = (DATA *)root->data;
         unsigned char *byte_ptr = (unsigned char *)data->byte;
         unsigned char byte = *byte_ptr;
-        strcpy(table[(int)byte],  path);
-    }
+        strcpy(table[(int)byte], path);
 
-    else{
+    } else {
         strcpy(left, path);
         strcpy(right, path);
 
-        //concatenando na string: adiciona 0 se for pra esqurda e 1 se for pra direita
+        // Concatenando na string: adiciona 0 se for para a esquerda e 1 se for para a direita
         strcat(left, "0");
         strcat(right, "1");
 
@@ -173,7 +172,7 @@ void setTable(char **table, struct tree *root, char *path, int height){
 // Função que conta quanto de lixo tem na árvore:
 
 int trash_size(char **table, uint64_t *frequency){
-    int bits = 0;
+    uint64_t bits = 0;
 
     for(int i = 0; i < 256; i++){
         if(frequency[i] != 0){
@@ -187,7 +186,7 @@ int trash_size(char **table, uint64_t *frequency){
 
 // Função que conta todos os nós da árvore:
 
-void tree_size(struct tree *root, int *size){
+void tree_size(struct tree *root, int *size){ // Recebe a árvore e um inteiro ao qual chega como 0
     if(root == NULL) return;
 
     if(root->left == NULL && root->right == NULL){
@@ -204,9 +203,8 @@ void tree_size(struct tree *root, int *size){
 
 // Função que pega a árvore em pré-ordem e coloca ela em uma string:
 
-void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){
+void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){ // Recebe a árvore, uma string nula, o tamanho da árvore e um contador
     if(root){
-        //str = (char *)realloc(str, *counter);
         DATA *data = (DATA *)root->data;
         unsigned char *byte_ptr = (unsigned char*)data->byte;
         unsigned char byte = *byte_ptr;
@@ -214,17 +212,13 @@ void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){
         if(root->left == NULL && root->right == NULL) {
             if(byte == '*' || byte == '\\'){
                 str[*counter] = '\\';
-                //printf("%d countersss\n", *counter);
                 (*counter)++;
             }
         }
-        //printf("%d counter\n", *counter);
         str[*counter] = byte;
 
         (*counter)++;
         get_tree(root->left, str, size_tree, counter);
-
-        //(*counter)++;
         get_tree(root->right, str, size_tree, counter);
     }
 
@@ -232,7 +226,9 @@ void get_tree(TREE *root, unsigned char *str, int size_tree, int *counter){
         str[*counter] = '\0';
 }
 
-TREE *create_node(unsigned char element){
+// Função para criar um nó da árvore:
+
+TREE *create_node(unsigned char element){ // 
     TREE *new_node = (TREE*)malloc(sizeof(TREE));
     new_node->data = malloc(sizeof(unsigned char));
     memcpy(new_node->data, &element, sizeof(unsigned char));
@@ -241,7 +237,9 @@ TREE *create_node(unsigned char element){
     return new_node;
 }
 
-TREE *mount_tres_for_decompress(TREE *tree, int *i,  unsigned char *bytes, int size_max){
+// Função para remontar a árvore:
+
+TREE *mount_tres_for_decompress(TREE *tree, int *i, unsigned char *bytes, int size_max){
 
     if((*i) >= size_max)return tree;
 
