@@ -150,7 +150,7 @@ int heightTree(struct tree *root){
 
     A função allocTable() serve para alocarmos uma matriz com todos os valores como 0.
 
-    @param          height          A altura da árvore + 1 para criarmos com uma linha a mais  
+    @param          height          A altura da árvore + 1 para criarmos com uma coluna a mais  
     @param          table           Matriz que será alocada
 
 */
