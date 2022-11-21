@@ -11,10 +11,10 @@ _Bool get_num_comp(double *x, TREE *tree, double *tree_y, TREE *avl, double *avl
     TREE *aux;
     srand(time(NULL));
 
-    int *visited = (int *)malloc(sizeof(int)*SIZE);
+    int *visited = (int *)malloc(sizeof(int) * (SIZE + 1));
     if(!visited)return 0;
 
-    memset(visited, 0, sizeof(int)*SIZE);
+    memset(visited, 0, sizeof(int)*(SIZE + 1));
 
     int i = 0;
     while(1){
@@ -87,7 +87,7 @@ _Bool plot(double *x, double *tree_y, double *avl_y){
     engEvalString(ep, "subplot(3, 1, 1);");
 	engEvalString(ep, "plot(X, AY, 'b.', X, TY, 'k.');");
 	engEvalString(ep, "title('ABB Desbalanceada vs AVL');");
-    engEvalString(ep, "legend('ABB', 'AVL');");
+    engEvalString(ep, "legend('AVL', 'ABB');");
 	engEvalString(ep, "xlabel('ITEM');");
 	engEvalString(ep, "ylabel('NUMBER OF COMPARISONS');");
 	engEvalString(ep, "grid;");
