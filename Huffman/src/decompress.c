@@ -67,7 +67,6 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
 	if(!buffer)return 0;
 
     while(*i < pos){
-
         for(int j = 7; j >= 0; j--){
             if(*i == pos-1 && j < size_trash)return 1;
             if(bit_is_set(bytes[*i], j))
@@ -89,6 +88,17 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
             }
         }
         (*i)++;
+        if(count >= BLOCK_SIZE){
+            ssize_t status = write(new_fd, buffer, count);
+            if(status == -1)return 0;
+            count = 0;
+        }
+    }
+
+    if(count != 0){
+        ssize_t status = write(new_fd, buffer, count);
+        if(status == -1)return 0;
+        count = 0;
     }
 
     return 1;

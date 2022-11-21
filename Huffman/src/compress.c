@@ -290,8 +290,8 @@ _Bool compress(int fd, int new_fd)
     int size_tree = 0;
 
     trash = trash_size(table, array_freq);
-    tree_size(tree, &sizetree);           
-_
+    tree_size(tree, &size_tree);
+    
     int counter = 0;
     unsigned char tree_str[8192];
 
