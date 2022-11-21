@@ -40,7 +40,22 @@ _Bool get_freq_table(int fd, uint64_t *array_freq)
     return (size >= 0);
 }
 
-// Função que cria a Fila de Prioridades:
+/*
+    A função mount_queue() monta a fila de prioridade de acordo com cada frenquecia do array de frenquecia de forma crecente.
+    A mesma percorre todo o array de frequencia de tamanho 256.
+    Quando aquela posição do array tiver tamanho(frequência) 0 ele não é adicionado da lista e é pulado para a proxima posição, pois 
+    aquele byte não está sendo utilizado.
+    É feita a alocação de ponteiro *data do tipo DATA para que seja recebida a frequencia e o byte daquela posição e com esse ponteiro
+    é feito a criação da tree.
+    O byte é o proprio indice e a frequcia é o proprio tamanho(frequência) da posição do array de frequência.
+    Depois de criada a árvore é feita o enfileramento daquele node do tipo árvore de forma crescente.
+    Por fim retorna true ou false de acordo com a execução da função.
+
+    @param          *array_freq         Array com a frequencia de cada byte.
+    @param             *list            Fila de prioridade onde será enfilerado cada nó do tipo arvore.
+
+
+*/
 
 _Bool mount_queue(uint64_t *array_freq, LIST *list)
 {
@@ -79,7 +94,19 @@ _Bool mount_queue(uint64_t *array_freq, LIST *list)
     return 1;
 }
 
-// Função que escreve o cabeçalho do arquivo:
+/*
+    A função write_header() Escreve no arquivo comprimido o tamanho do lixo, tamanho da arv e a propria arvora em pre-ordem e retorna true
+    ou false de acordo com a execução da função.
+    Define o primeiro byte do lixo com um shift bit para a esquerda 5 vezes e faz o | com tamanho da arvore feito o shift bit para a direira 8 vezes.
+    Define o segundo byte do arquivo como o proprio tamanho da arv.
+    Define o terceiro byte como a propria arv em pre-ordem.
+
+    @param          compressed_file         Id do arquivo a ser comprimido.
+    @param               trash              Tamanho do lixo.
+    @param             size_tree            Tamanho da arv.
+    @param               tree               Arvore em pre ordem.
+
+*/
 
 _Bool write_header(int compressed_file, int trash, int size_tree, unsigned char *tree)
 {
@@ -107,7 +134,10 @@ _Bool write_header(int compressed_file, int trash, int size_tree, unsigned char 
     return 1;
 }
 
-// Função que escreve o Bit-Stream:
+/*
+    A função write_bit_stream(), escreve o bit-stream e retorna true ou false de acordo com a execução da função.
+    
+*/
 
 _Bool write_bit_stream(int compressed_file, int fd, char **table)
 {
@@ -184,19 +214,33 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table)
     return 1;
 }
 
-// Função que escreve todos os dados no arquivo compactado:
+/*
+    A função write_in_file() escreve as escreve o cabeçalho no novo arquivo.
+    Primeiro escreve no arquivo compactado o lixo, tamanho da arv e a arvore e 
+    depois escreve os bit_stream.
+
+    @param          fd          Arquivo original.
+    @param         trash        Tamanho do lixo.
+    @param       size_tree      Tamanho da arv.
+    @param         table        Dicionario.
+    @param       array_freq     Array com as frequências dos bytes.
+    @param         tree         Arvore montada.
+    @param        new_fd        Arquivo a ser compactado. 
+
+
+*/
 
 _Bool write_in_file(int fd, int trash, int size_tree, char **table, uint64_t *array_freq, unsigned char *tree, int new_fd)
 {
     _Bool status;
 
-    status = write_header(new_fd, trash, size_tree, tree); // Escreve o cabeçalho do arquivo
+    status = write_header(new_fd, trash, size_tree, tree); 
     if (!status)
         return 0;
 
     lseek(fd, 0, SEEK_SET);
 
-    status = write_bit_stream(new_fd, fd, table); //
+    status = write_bit_stream(new_fd, fd, table); 
     if (!status)
         return 0;
 
@@ -231,32 +275,32 @@ _Bool compress(int fd, int new_fd)
     if (!status)
         return 0;
 
-    TREE *tree = mount_tree(list); // Montar a árvore
+    TREE *tree = mount_tree(list);
     if (!tree)
         return 0;
 
-    int height = heightTree(tree); // Saber o tamanho da árvore
+    int height = heightTree(tree); // Altura da arvore
 
     char **table = NULL;
 
-    table = allocTable(height + 1, table); // Alocar a matriz "dicionário"
-    setTable(table, tree, "", height + 1); // Iniciar a matriz "dicionário" com cada os caminhos da árvore em cada linha
+    table = allocTable(height + 1, table);//aloca e limpa a table
+    setTable(table, tree, "", height + 1);
 
     int trash = 0;
     int size_tree = 0;
 
-    trash = trash_size(table, array_freq); // Retorna a quantidade de lixo existente do fluxo de bits da árvore
-    tree_size(tree, &size_tree);           // Sobrescreve a variável "size_tree", que consequentemente é o tamanho da árvore
-
+    trash = trash_size(table, array_freq);
+    tree_size(tree, &sizetree);           
+_
     int counter = 0;
-    unsigned char tree_str[8192]; // Cria o array de char que irá ser utilizado posteriormente
+    unsigned char tree_str[8192];
 
-    get_tree(tree, tree_str, size_tree, &counter); // Sobrescreve o array de char "tree_str" em pré-ordem baseado na árvore
+    get_tree(tree, tree_str, size_tree, &counter);//Escreve na string tree_str a arv em pre-ordem
 
-    status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, new_fd); // Escreve um novo arquivo já compactado
+    status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, new_fd);
     if (!status)
         return 0;
 
-    free(array_freq); // Libera a variável após o uso dela, para não haver vazamento de memória
+    free(array_freq);
     return 1;
 }
