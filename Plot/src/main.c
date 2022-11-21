@@ -4,8 +4,8 @@
 #include <engine.h>
 //---//
 #include "../include/tree.h"
-#define SIZE    20000
-#define COUNT   2000
+#define SIZE    30000
+#define COUNT   3000
 
 _Bool get_num_comp(double *x, TREE *tree, double *tree_y, TREE *avl, double *avl_y){
     TREE *aux;
@@ -13,6 +13,7 @@ _Bool get_num_comp(double *x, TREE *tree, double *tree_y, TREE *avl, double *avl
 
     int *visited = (int *)malloc(sizeof(int)*SIZE);
     if(!visited)return 0;
+
     memset(visited, 0, sizeof(int)*SIZE);
 
     int i = 0;
@@ -80,6 +81,8 @@ _Bool plot(double *x, double *tree_y, double *avl_y){
 	memcpy((void *)mxGetPr(AY), (void *)avl_y, sizeof(double)*COUNT);
 	engPutVariable(ep, "AY", AY);
 
+    engEvalString(ep, "figure('name','Plotagem Estrutura de Dados','NumberTitle','off')");
+
     //PLOT ABB VS AVL
     engEvalString(ep, "subplot(3, 1, 1);");
 	engEvalString(ep, "plot(X, AY, 'b.', X, TY, 'k.');");
@@ -93,7 +96,6 @@ _Bool plot(double *x, double *tree_y, double *avl_y){
     engEvalString(ep, "subplot(3, 1, 2);");
     engEvalString(ep, "plot(X, TY, 'k.');");
 	engEvalString(ep, "title('ABB Desbalanceada');");
-    engEvalString(ep, "legend('ABB');");
 	engEvalString(ep, "xlabel('ITEM');");
 	engEvalString(ep, "ylabel('NUMBER OF COMPARISONS');");
 	engEvalString(ep, "grid;");
@@ -102,7 +104,6 @@ _Bool plot(double *x, double *tree_y, double *avl_y){
     engEvalString(ep, "subplot(3, 1, 3);");
     engEvalString(ep, "plot(X, AY, 'b.');");
 	engEvalString(ep, "title('AVL');");
-    engEvalString(ep, "legend('AVL');");
 	engEvalString(ep, "xlabel('ITEM');");
 	engEvalString(ep, "ylabel('NUMBER OF COMPARISONS');");
 	engEvalString(ep, "grid;");
