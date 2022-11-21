@@ -4,8 +4,8 @@
 #include <engine.h>
 //---//
 #include "../include/tree.h"
-#define SIZE    10000
-#define COUNT   1000
+#define SIZE    20000
+#define COUNT   2000
 
 _Bool get_num_comp(double *x, TREE *tree, double *tree_y, TREE *avl, double *avl_y){
     TREE *aux;
