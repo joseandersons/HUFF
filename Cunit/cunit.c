@@ -6,8 +6,8 @@
 #include <limits.h>
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h> 
-#include "../include/list.h"
-#include "../include/tree.h"
+#include "../Huffman/include/list.h"
+#include "../Huffman/include/tree.h"
 
 DATA *adc_test_data(unsigned char c, uint64_t i){
     DATA *data = (DATA*)malloc(sizeof(DATA));
@@ -52,7 +52,9 @@ void list_test(){
     TREE *t2 = (TREE*)list_dequeue(list);
     TREE *t3 = (TREE*)list_dequeue(list);
     
-    DATA *aux1 = t1->data, *aux2 = t2->data, *aux3 = t3->data;
+    DATA *aux1 = t1->data,
+         *aux2 = t2->data,
+         *aux3 = t3->data;
    
     CU_ASSERT(*(int*)aux1->freq == 0);
     CU_ASSERT(*(int*)aux2->freq == 12);
@@ -79,7 +81,9 @@ void tree_test(){
     tree->right->left = create_tree(da6, NULL, NULL);
     tree->right->right = create_tree(da7, NULL, NULL);
 
-    DATA *aux1 = tree->right->right->data, *aux2 = tree->right->left->data, *aux3 = tree->right->data;
+    DATA *aux1 = tree->right->right->data, 
+         *aux2 = tree->right->left->data,
+         *aux3 = tree->right->data;
 
     CU_ASSERT(*(char*)aux1->byte == 'g');
     CU_ASSERT(*(char*)aux2->byte == 'f');
