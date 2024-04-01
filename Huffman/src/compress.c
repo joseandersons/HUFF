@@ -145,20 +145,16 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table)
     unsigned char *buffer, *buffer_write;
 
     buffer = (unsigned char *)malloc(BLOCK_SIZE);
-    if (!buffer)
-        return 0;
+    if (!buffer) return 0;
 
     buffer_write = (unsigned char *)malloc(BLOCK_SIZE);
-    if (!buffer_write)
-        return 0;
+    if (!buffer_write) return 0;
 
     int byte = 0, bit_amount = 0, byte_pos = 7, buffer_count = 0;
 
-    while (1)
-    {
+    while(1){
         size = read(fd, buffer, BLOCK_SIZE);
-        if (size <= 0)
-            break;
+        if (size <= 0) break;
 
         for (int c = 0; c < (unsigned int)size; c++)
         {
@@ -182,12 +178,13 @@ _Bool write_bit_stream(int compressed_file, int fd, char **table)
                     byte = 0;
                     byte_pos = 7;
                     bit_amount = 0;
+
                 }
 
                 if (buffer_count >= BLOCK_SIZE)
                 {
-                    size = write(compressed_file, buffer_write, BLOCK_SIZE);
-                    if (size == -1)
+                    ssize_t size_write = write(compressed_file, buffer_write, BLOCK_SIZE);
+                    if (size_write == -1)
                         return 0;
 
                     buffer_count = 0;
@@ -260,24 +257,19 @@ _Bool compress(int fd, int new_fd)
     _Bool status;
 
     uint64_t *array_freq = (uint64_t *)malloc(sizeof(uint64_t) * 256);
-    if (!array_freq)
-        return 0;
+    if (!array_freq) return 0;
 
     status = get_freq_table(fd, array_freq); // Obtém a lista de frequência dos byts do arquivo lido
-    if (!status)
-        return 0;
+    if (!status) return 0;
 
     LIST *list = list_create();
-    if (!list)
-        return 0;
+    if (!list) return 0;
 
     status = mount_queue(array_freq, list);
-    if (!status)
-        return 0;
+    if (!status) return 0;
 
     TREE *tree = mount_tree(list);
-    if (!tree)
-        return 0;
+    if (!tree) return 0;
 
     int height = heightTree(tree); // Altura da arvore
 
@@ -295,11 +287,10 @@ _Bool compress(int fd, int new_fd)
     int counter = 0;
     unsigned char tree_str[8192];
 
-    get_tree(tree, tree_str, size_tree, &counter);//Escreve na string tree_str a arv em pre-ordem
+    get_tree(tree, tree_str, size_tree, &counter);
 
     status = write_in_file(fd, trash, size_tree, table, array_freq, tree_str, new_fd);
-    if (!status)
-        return 0;
+    if (!status) return 0;
 
     free(array_freq);
     return 1;

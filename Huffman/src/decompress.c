@@ -68,7 +68,7 @@ _Bool write_files(TREE *tree, int *i, unsigned char *bytes, int pos, int new_fd,
 
     while(*i < pos){
         for(int j = 7; j >= 0; j--){
-            if(*i == pos-1 && j < size_trash)return 1;
+            if(*i == pos-1 && j < size_trash)break;
             if(bit_is_set(bytes[*i], j))
                 aux = aux->right;
             else
